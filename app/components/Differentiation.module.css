@@ -1,0 +1,141 @@
+.diff {
+  padding: 160px 24px;
+  background: var(--bg-primary);
+  position: relative;
+  overflow: hidden;
+}
+
+.diff::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 600px;
+  height: 600px;
+  background: radial-gradient(circle, rgba(212, 175, 122, 0.04), transparent 70%);
+  pointer-events: none;
+}
+
+.container {
+  max-width: 900px;
+  margin: 0 auto;
+  text-align: center;
+  position: relative;
+  z-index: 1;
+}
+
+.tag {
+  font-size: 12px;
+  letter-spacing: 0.15em;
+  color: var(--accent-gold);
+  font-weight: 600;
+  text-transform: uppercase;
+  margin-bottom: 32px;
+}
+
+.percentWrapper {
+  margin-bottom: 32px;
+}
+
+.percent {
+  font-family: var(--font-mono);
+  font-size: 120px;
+  font-weight: 700;
+  color: var(--accent-gold);
+  line-height: 1;
+  display: inline-block;
+}
+
+.headline {
+  font-family: var(--font-serif);
+  font-size: 36px;
+  font-weight: 700;
+  line-height: 1.4;
+  color: var(--text-primary);
+  letter-spacing: -0.02em;
+  margin-bottom: 80px;
+}
+
+.points {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 48px;
+  margin-top: 80px;
+}
+
+.point {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+}
+
+.pointNumber {
+  font-family: var(--font-mono);
+  font-size: 48px;
+  font-weight: 700;
+  color: var(--accent-gold);
+  line-height: 1;
+}
+
+.pointContent {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.pointTitle {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--text-primary);
+  line-height: 1.4;
+}
+
+.pointSubtitle {
+  font-size: 14px;
+  color: var(--text-secondary);
+}
+
+@media (max-width: 1024px) {
+  .percent {
+    font-size: 100px;
+  }
+
+  .headline {
+    font-size: 32px;
+  }
+
+  .points {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+}
+
+@media (max-width: 768px) {
+  .diff {
+    padding: 120px 20px;
+  }
+
+  .percent {
+    font-size: 80px;
+  }
+
+  .headline {
+    font-size: 28px;
+    margin-bottom: 60px;
+  }
+
+  .points {
+    margin-top: 60px;
+    gap: 32px;
+  }
+
+  .pointNumber {
+    font-size: 40px;
+  }
+
+  .pointTitle {
+    font-size: 17px;
+  }
+}
