@@ -33,8 +33,8 @@ export default function About() {
           <Image
             src="/assets/used/logo/signature_gold1.png"
             alt="대표세무사 서명"
-            width={200}
-            height={60}
+            width={500}
+            height={100}
             className={styles.signature}
           />
         </div>
