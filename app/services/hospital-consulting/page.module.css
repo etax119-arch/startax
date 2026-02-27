@@ -1,0 +1,20 @@
+/* ═══════════════════════════════════════════
+   병의원 전문 컨설팅 페이지 (Hospital Consulting)
+   공통 스타일: ../styles/shared.module.css
+   섹션별 스타일: ./sections/*.module.css
+   ═══════════════════════════════════════════ */
+
+/* ── Hero Composes ── */
+.hero { composes: hero from '../styles/shared.module.css'; padding: 200px 24px 0; }
+.heroGlow { composes: heroGlow from '../styles/shared.module.css'; top: 50%; }
+.heroContent { composes: heroContent from '../styles/shared.module.css'; padding-bottom: 80px; }
+.tag { composes: tag from '../styles/shared.module.css'; }
+.heroTitle { composes: heroTitle from '../styles/shared.module.css'; }
+.goldText { composes: goldText from '../styles/shared.module.css'; }
+.heroDesc { composes: heroDesc from '../styles/shared.module.css'; }
+
+@media (max-width: 768px) {
+  .hero {
+    padding: 160px 20px 0;
+  }
+}

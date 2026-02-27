@@ -1,0 +1,93 @@
+/* 경정청구 (Tax Correction) */
+
+.sectionAlt { composes: sectionAlt from '../../styles/shared.module.css'; }
+.container { composes: container from '../../styles/shared.module.css'; }
+.sectionHeader { composes: sectionHeader from '../../styles/shared.module.css'; }
+.tag { composes: tag from '../../styles/shared.module.css'; }
+.sectionTitle { composes: sectionTitle from '../../styles/shared.module.css'; }
+.sectionDesc { composes: sectionDesc from '../../styles/shared.module.css'; max-width: 600px; }
+
+.content {
+  display: flex;
+  flex-direction: column;
+  gap: 60px;
+}
+
+.info {
+  max-width: 800px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.text {
+  font-size: 26px;
+  line-height: 1.8;
+  color: var(--text-secondary);
+  word-break: keep-all;
+}
+
+.refundGrid {
+  text-align: center;
+}
+
+.refundTitle {
+  font-size: 32px;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 40px;
+}
+
+.refundCards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+
+.refundCard {
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: 8px;
+  padding: 40px 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  transition: all 0.4s ease;
+}
+
+.refundCard:hover {
+  border-color: var(--border-hover);
+  transform: translateY(-4px);
+}
+
+.refundIcon {
+  font-family: var(--font-display);
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--accent-gold);
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 1px solid var(--accent-gold);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0.7;
+}
+
+.refundLabel {
+  font-size: 27px;
+  color: var(--text-secondary);
+}
+
+.refundAmount {
+  font-family: var(--font-display);
+  font-size: 34px;
+  font-weight: 700;
+  color: var(--accent-gold);
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+  .refundCards { grid-template-columns: 1fr; }
+}

@@ -1,0 +1,81 @@
+.section { composes: section from '../../styles/shared.module.css'; }
+.container { composes: container from '../../styles/shared.module.css'; }
+.sectionHeader { composes: sectionHeader from '../../styles/shared.module.css'; }
+.tag { composes: tag from '../../styles/shared.module.css'; }
+.sectionTitle { composes: sectionTitle from '../../styles/shared.module.css'; }
+.sectionDesc { composes: sectionDesc from '../../styles/shared.module.css'; max-width: 600px; }
+
+.contentBlock {
+  max-width: 800px;
+  margin: 0 auto 64px;
+  text-align: center;
+}
+
+.bodyText {
+  font-size: 21px;
+  line-height: 1.8;
+  color: var(--text-secondary);
+  word-break: keep-all;
+}
+
+.subTitle {
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--text-primary);
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.msoTargetSection {
+  margin-top: 16px;
+}
+
+.msoGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+
+.msoCard {
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: 8px;
+  padding: 36px 28px;
+  transition: all 0.4s ease;
+}
+
+.msoCard:hover {
+  transform: translateY(-4px);
+  border-color: var(--border-hover);
+}
+
+.msoNum {
+  font-family: var(--font-display);
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--accent-gold);
+  margin-bottom: 16px;
+  opacity: 0.6;
+}
+
+.msoCardTitle {
+  font-size: 26px;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 8px;
+}
+
+.msoCardDesc {
+  font-size: 21px;
+  line-height: 1.75;
+  color: var(--text-secondary);
+  word-break: keep-all;
+}
+
+@media (max-width: 1024px) {
+  .msoGrid { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 768px) {
+  .msoGrid { grid-template-columns: 1fr; }
+}

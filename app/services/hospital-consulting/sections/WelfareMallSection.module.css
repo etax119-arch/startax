@@ -1,0 +1,65 @@
+.sectionAlt { composes: sectionAlt from '../../styles/shared.module.css'; }
+.container { composes: container from '../../styles/shared.module.css'; }
+.sectionHeader { composes: sectionHeader from '../../styles/shared.module.css'; }
+.tag { composes: tag from '../../styles/shared.module.css'; }
+.sectionTitle { composes: sectionTitle from '../../styles/shared.module.css'; }
+.sectionDesc { composes: sectionDesc from '../../styles/shared.module.css'; max-width: 600px; }
+
+.welfareMallContent {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.welfareMallCard {
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: 8px;
+  padding: 60px 48px;
+  text-align: center;
+  transition: all 0.4s ease;
+}
+
+.welfareMallCard:hover {
+  border-color: var(--border-hover);
+}
+
+.welfareMallTitle {
+  font-size: 31px;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 16px;
+}
+
+.welfareMallDesc {
+  font-size: 22px;
+  line-height: 1.8;
+  color: var(--text-secondary);
+  margin-bottom: 36px;
+  word-break: keep-all;
+}
+
+.welfareMallFeatures {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+.welfareMallFeature {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 21px;
+  color: var(--text-secondary);
+}
+
+.welfareMallFeature svg {
+  color: var(--accent-gold);
+  flex-shrink: 0;
+}
+
+@media (max-width: 768px) {
+  .welfareMallCard { padding: 40px 24px; }
+  .welfareMallFeatures { grid-template-columns: 1fr; }
+}

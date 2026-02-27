@@ -1,0 +1,108 @@
+.ctaSection {
+  padding: 120px 24px;
+  background: var(--bg-tertiary);
+  text-align: center;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.ctaTitle {
+  font-family: var(--font-serif);
+  font-size: 36px;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 16px;
+}
+
+.ctaDesc {
+  font-size: 17px;
+  color: var(--text-secondary);
+  margin-bottom: 48px;
+}
+
+.ctaActions {
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+  align-items: center;
+}
+
+.ctaConsult {
+  display: inline-flex;
+  padding: 16px 40px;
+  background: var(--accent-gold);
+  border-radius: 4px;
+  color: var(--bg-primary);
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  border: none;
+  font-family: var(--font-sans);
+  transition: all 0.3s ease;
+}
+
+.ctaConsult:hover {
+  background: var(--accent-gold-light);
+  transform: translateY(-2px);
+}
+
+.ctaPrimary {
+  display: inline-flex;
+  padding: 16px 40px;
+  background: transparent;
+  border: 1px solid var(--accent-gold);
+  border-radius: 4px;
+  color: var(--accent-gold);
+  font-size: 16px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+.ctaPrimary:hover {
+  background: var(--accent-gold);
+  color: var(--bg-primary);
+  transform: translateY(-2px);
+}
+
+.ctaSecondary {
+  display: inline-flex;
+  padding: 16px 40px;
+  border: 1px solid var(--accent-gold);
+  border-radius: 4px;
+  color: var(--accent-gold);
+  font-size: 16px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+.ctaSecondary:hover {
+  background: var(--accent-gold);
+  color: var(--bg-primary);
+  transform: translateY(-2px);
+}
+
+@media (max-width: 768px) {
+  .ctaSection {
+    padding: 80px 20px;
+  }
+
+  .ctaTitle {
+    font-size: 28px;
+  }
+
+  .ctaActions {
+    flex-direction: column;
+  }
+
+  .ctaConsult,
+  .ctaPrimary,
+  .ctaSecondary {
+    width: 100%;
+    justify-content: center;
+  }
+}

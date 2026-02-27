@@ -1,0 +1,86 @@
+.nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  background: rgba(10, 10, 15, 0.8);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--border-subtle);
+  padding: 16px 0;
+}
+
+.navContainer {
+  max-width: 100%;
+  margin: 0;
+  padding: 0 120px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+}
+
+.logoIcon {
+  width: 32px;
+  height: 32px;
+  object-fit: contain;
+}
+
+.logoMain {
+  font-family: var(--font-serif);
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--accent-gold);
+  letter-spacing: 0.05em;
+}
+
+.logoSub {
+  font-size: 14px;
+  color: var(--text-secondary);
+  padding-left: 12px;
+  border-left: 1px solid var(--border-subtle);
+}
+
+.ctaButton {
+  padding: 10px 24px;
+  border: 1px solid var(--accent-gold);
+  border-radius: 4px;
+  color: var(--accent-gold);
+  font-size: 14px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  background: transparent;
+  cursor: pointer;
+}
+
+.ctaButton:hover {
+  background: var(--accent-gold);
+  color: var(--bg-primary);
+}
+
+@media (max-width: 1024px) {
+  .navContainer {
+    padding: 0 40px;
+  }
+}
+
+@media (max-width: 768px) {
+  .navContainer {
+    padding: 0 20px;
+  }
+
+  .logoSub {
+    display: none;
+  }
+
+  .logoIcon {
+    width: 28px;
+    height: 28px;
+  }
+}

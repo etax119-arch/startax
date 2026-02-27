@@ -1,0 +1,155 @@
+/* 상속증여 (Inheritance & Gift) */
+
+.sectionAlt { composes: sectionAlt from '../../styles/shared.module.css'; }
+.container { composes: container from '../../styles/shared.module.css'; }
+.sectionHeader { composes: sectionHeader from '../../styles/shared.module.css'; }
+.tag { composes: tag from '../../styles/shared.module.css'; }
+.sectionTitle { composes: sectionTitle from '../../styles/shared.module.css'; }
+.sectionDesc { composes: sectionDesc from '../../styles/shared.module.css'; max-width: 600px; }
+
+.content {
+  display: flex;
+  flex-direction: column;
+  gap: 48px;
+  align-items: center;
+}
+
+.desc {
+  font-size: 26px;
+  line-height: 1.8;
+  color: var(--text-secondary);
+  text-align: center;
+  max-width: 700px;
+  word-break: keep-all;
+}
+
+/* Asset Icon Grid */
+.assetIconGrid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 16px;
+  width: 100%;
+}
+
+.assetIconCard {
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: 12px;
+  padding: 28px 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  transition: all 0.4s ease;
+  width: calc(25% - 12px);
+}
+
+.assetIconCard:hover {
+  border-color: var(--border-hover);
+  transform: translateY(-4px);
+}
+
+.assetIconLabel {
+  font-size: 27px;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.assetIconBox {
+  color: #D4AF7A;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Hexagon Flow */
+.policySection {
+  width: 100%;
+  padding: 20px 0;
+}
+
+.hexFlow {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+}
+
+.hexStep {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+}
+
+.hexagon {
+  width: 100px;
+  height: 100px;
+  clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: rgba(255, 255, 255, 0.9);
+  transition: transform 0.3s ease;
+}
+
+.hexagon:hover { transform: scale(1.08); }
+
+.hexDark { background: #2E2620; }
+.hexBlue { background: #7A5C36; }
+.hexNavy { background: #3E3228; }
+.hexRoyal { background: #5A4530; }
+
+.hexLabel {
+  font-size: 25px;
+  font-weight: 600;
+  color: var(--text-primary);
+  white-space: nowrap;
+}
+
+.hexConnector {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  width: 36px;
+  flex-shrink: 0;
+  padding-top: 8px;
+  align-self: center;
+  margin-top: -24px;
+}
+
+.hexDot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--text-muted);
+  opacity: 0.5;
+  flex-shrink: 0;
+}
+
+.hexDotLine {
+  flex: 1;
+  height: 1px;
+  background: var(--text-muted);
+  opacity: 0.3;
+}
+
+/* Tablet */
+@media (max-width: 1024px) {
+  .assetIconCard { width: calc(33.333% - 11px); }
+  .hexagon { width: 85px; height: 85px; }
+  .hexConnector { width: 24px; }
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+  .assetIconCard {
+    width: calc(50% - 8px);
+    padding: 20px 16px;
+  }
+  .assetIconBox svg { width: 28px; height: 28px; }
+  .hexFlow { flex-wrap: wrap; gap: 24px; justify-content: center; }
+  .hexagon { width: 76px; height: 76px; }
+  .hexConnector { display: none; }
+  .hexLabel { font-size: 20px; }
+}

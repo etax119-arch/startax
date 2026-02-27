@@ -1,0 +1,140 @@
+/* 법인전환 */
+
+.sectionAlt { composes: sectionAlt from '../../../styles/shared.module.css'; }
+.container { composes: container from '../../../styles/shared.module.css'; }
+.sectionHeader { composes: sectionHeader from '../../../styles/shared.module.css'; }
+.tag { composes: tag from '../../../styles/shared.module.css'; }
+.sectionTitle { composes: sectionTitle from '../../../styles/shared.module.css'; }
+.sectionDesc { composes: sectionDesc from '../../../styles/shared.module.css'; }
+
+/* 혜택 그리드 */
+.benefitGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 24px;
+}
+
+.benefitCard {
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: 8px;
+  padding: 40px 32px;
+  transition: transform 0.4s ease, border-color 0.4s ease;
+}
+
+.benefitCard:hover {
+  border-color: var(--border-hover);
+  transform: translateY(-4px);
+}
+
+.benefitNumber {
+  font-family: var(--font-display);
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--accent-gold);
+  margin-bottom: 16px;
+  opacity: 0.6;
+}
+
+.benefitTitle {
+  font-size: 26px;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 24px;
+}
+
+.benefitComparison {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 20px;
+  background: var(--bg-elevated);
+  border-radius: 8px;
+  border: 1px solid var(--border-subtle);
+  margin-bottom: 20px;
+}
+
+.benefitBefore {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 17px;
+  color: var(--text-muted);
+}
+
+.benefitAfter {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 17px;
+  color: var(--accent-gold);
+  font-weight: 600;
+}
+
+.benefitLabel {
+  font-size: 14px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--text-muted);
+  opacity: 0.6;
+}
+
+.benefitArrow {
+  color: var(--accent-gold);
+  opacity: 0.5;
+  flex-shrink: 0;
+}
+
+.benefitDesc {
+  font-size: 17px;
+  line-height: 1.7;
+  color: var(--text-secondary);
+  word-break: keep-all;
+}
+
+/* Notice Box */
+.noticeBox {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 20px 24px;
+  background: rgba(212, 175, 122, 0.06);
+  border: 1px solid rgba(212, 175, 122, 0.15);
+  border-radius: 8px;
+  margin-top: 32px;
+}
+
+.noticeBox svg {
+  flex-shrink: 0;
+  color: var(--accent-gold);
+  margin-top: 2px;
+}
+
+.noticeBox p {
+  font-size: 15px;
+  line-height: 1.7;
+  color: var(--text-secondary);
+  word-break: keep-all;
+}
+
+/* Tablet */
+@media (max-width: 1024px) {
+  .benefitGrid { grid-template-columns: 1fr; }
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+  .benefitComparison {
+    flex-direction: column;
+    gap: 12px;
+    align-items: stretch;
+  }
+
+  .benefitArrow {
+    transform: rotate(90deg);
+    align-self: center;
+  }
+}

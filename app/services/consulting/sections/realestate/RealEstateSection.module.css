@@ -1,0 +1,70 @@
+/* 부동산/재무컨설팅 */
+
+.section { composes: section from '../../../styles/shared.module.css'; }
+.container { composes: container from '../../../styles/shared.module.css'; }
+.sectionHeader { composes: sectionHeader from '../../../styles/shared.module.css'; }
+.tag { composes: tag from '../../../styles/shared.module.css'; }
+.sectionTitle { composes: sectionTitle from '../../../styles/shared.module.css'; }
+.sectionDesc { composes: sectionDesc from '../../../styles/shared.module.css'; }
+
+/* 2-Column Grid */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 32px;
+}
+
+.card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: 8px;
+  padding: 40px 32px;
+  transition: border-color 0.4s ease;
+}
+
+.card:hover { border-color: var(--border-hover); }
+
+.cardTitle {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 26px;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 28px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.cardTitle svg {
+  color: var(--accent-gold);
+  flex-shrink: 0;
+}
+
+.list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.list li {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  font-size: 19px;
+  line-height: 1.8;
+  color: var(--text-secondary);
+  word-break: keep-all;
+}
+
+.list li svg {
+  flex-shrink: 0;
+  color: var(--accent-gold);
+  margin-top: 4px;
+}
+
+/* Tablet */
+@media (max-width: 1024px) {
+  .grid { grid-template-columns: 1fr; }
+}

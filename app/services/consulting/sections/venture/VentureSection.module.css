@@ -1,0 +1,227 @@
+/* 벤처기업 인증 */
+
+.section { composes: section from '../../../styles/shared.module.css'; }
+.container { composes: container from '../../../styles/shared.module.css'; }
+.sectionHeader { composes: sectionHeader from '../../../styles/shared.module.css'; }
+.tag { composes: tag from '../../../styles/shared.module.css'; }
+.sectionTitle { composes: sectionTitle from '../../../styles/shared.module.css'; }
+.sectionDesc { composes: sectionDesc from '../../../styles/shared.module.css'; }
+
+/* 혜택 */
+.benefitSection { margin-bottom: 72px; }
+
+.benefitHeading {
+  font-size: 23px;
+  font-weight: 700;
+  color: var(--text-primary);
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.benefitGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+
+.benefitCard {
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: 12px;
+  padding: 36px 28px;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  transition: transform 0.4s ease, border-color 0.4s ease, box-shadow 0.4s ease;
+}
+
+.benefitCard:hover {
+  transform: translateY(-6px);
+  border-color: rgba(212, 175, 122, 0.35);
+  box-shadow: 0 12px 40px rgba(212, 175, 122, 0.08);
+}
+
+.benefitIconWrap {
+  width: 56px;
+  height: 56px;
+  border-radius: 14px;
+  background: rgba(212, 175, 122, 0.1);
+  border: 1px solid rgba(212, 175, 122, 0.18);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--accent-gold);
+  margin-bottom: 20px;
+}
+
+.benefitNum {
+  font-family: var(--font-display);
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--accent-gold);
+  opacity: 0.5;
+  margin-bottom: 8px;
+}
+
+.benefitCategory {
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 12px;
+}
+
+.benefitDesc {
+  font-size: 17px;
+  line-height: 1.8;
+  color: var(--text-secondary);
+  word-break: keep-all;
+}
+
+/* 인증 유형 */
+.typeSection { margin-top: 16px; }
+
+.typeHeading {
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--text-primary);
+  text-align: center;
+  margin-bottom: 12px;
+}
+
+.typeSubtext {
+  font-size: 18px;
+  color: var(--text-muted);
+  text-align: center;
+  margin-bottom: 48px;
+}
+
+.typeDiagram {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 40px;
+}
+
+.typeHub { position: relative; }
+
+.typeHub::after {
+  content: '';
+  position: absolute;
+  bottom: -40px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 2px;
+  height: 40px;
+  background: linear-gradient(to bottom, rgba(212, 175, 122, 0.4), rgba(212, 175, 122, 0.1));
+}
+
+.typeHubInner {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 20px 36px;
+  background: rgba(212, 175, 122, 0.1);
+  border: 1px solid rgba(212, 175, 122, 0.3);
+  border-radius: 60px;
+  color: var(--accent-gold);
+  font-size: 22px;
+  font-weight: 700;
+}
+
+.typeGrid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+  width: 100%;
+  position: relative;
+}
+
+.typeGrid::before {
+  content: '';
+  position: absolute;
+  top: -20px;
+  left: 12.5%;
+  right: 12.5%;
+  height: 2px;
+  background: linear-gradient(to right, rgba(212, 175, 122, 0.1), rgba(212, 175, 122, 0.3), rgba(212, 175, 122, 0.3), rgba(212, 175, 122, 0.1));
+}
+
+.typeCard {
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: 12px;
+  padding: 32px 24px;
+  text-align: center;
+  position: relative;
+  transition: transform 0.4s ease, border-color 0.4s ease, box-shadow 0.4s ease;
+}
+
+.typeCard::before {
+  content: '';
+  position: absolute;
+  top: -20px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 2px;
+  height: 20px;
+  background: rgba(212, 175, 122, 0.3);
+}
+
+.typeCard:hover {
+  transform: translateY(-4px);
+  border-color: rgba(212, 175, 122, 0.3);
+  box-shadow: 0 8px 32px rgba(212, 175, 122, 0.06);
+}
+
+.typeIconWrap {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background: rgba(212, 175, 122, 0.08);
+  border: 1px solid rgba(212, 175, 122, 0.15);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--accent-gold);
+  margin: 0 auto 16px;
+}
+
+.typeTitle {
+  font-size: 21px;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 10px;
+}
+
+.typeDesc {
+  font-size: 17px;
+  line-height: 1.7;
+  color: var(--text-muted);
+  word-break: keep-all;
+}
+
+/* Tablet */
+@media (max-width: 1024px) {
+  .benefitGrid { grid-template-columns: repeat(2, 1fr); }
+
+  .typeGrid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px;
+  }
+
+  .typeGrid::before,
+  .typeCard::before { display: none; }
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+  .benefitGrid,
+  .typeGrid { grid-template-columns: 1fr; }
+
+  .typeHub::after { display: none; }
+
+  .typeHubInner {
+    font-size: 16px;
+    padding: 16px 28px;
+  }
+}

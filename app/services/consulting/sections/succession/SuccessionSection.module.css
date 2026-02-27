@@ -1,0 +1,259 @@
+/* 가업승계 */
+
+.section { composes: section from '../../../styles/shared.module.css'; }
+.container { composes: container from '../../../styles/shared.module.css'; }
+.sectionHeader { composes: sectionHeader from '../../../styles/shared.module.css'; }
+.tag { composes: tag from '../../../styles/shared.module.css'; }
+.sectionTitle { composes: sectionTitle from '../../../styles/shared.module.css'; }
+.sectionDesc { composes: sectionDesc from '../../../styles/shared.module.css'; }
+
+/* Highlight Banner */
+.highlightBanner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 20px 32px;
+  background: rgba(212, 175, 122, 0.08);
+  border: 1px solid rgba(212, 175, 122, 0.2);
+  border-radius: 8px;
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--accent-gold);
+  margin-bottom: 16px;
+}
+
+.highlightIcon {
+  display: flex;
+  color: var(--accent-gold);
+}
+
+/* Feature Block */
+.featureBlock { margin-top: 48px; }
+
+.featureCard {
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: 8px;
+  padding: 48px 40px;
+  transition: border-color 0.4s ease;
+}
+
+.featureCard:hover { border-color: var(--border-hover); }
+
+.featureNumber {
+  font-family: var(--font-display);
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--accent-gold);
+  margin-bottom: 24px;
+  opacity: 0.6;
+}
+
+.featureTitle {
+  font-size: 30px;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 16px;
+}
+
+.featureBody {
+  font-size: 19px;
+  line-height: 1.8;
+  color: var(--text-secondary);
+  word-break: keep-all;
+}
+
+/* Process Flow */
+.processFlow {
+  display: grid;
+  grid-template-columns: repeat(7, auto);
+  align-items: start;
+  margin-top: 40px;
+  padding: 32px;
+  background: var(--bg-elevated);
+  border-radius: 8px;
+  border: 1px solid var(--border-subtle);
+}
+
+.processItem { display: contents; }
+
+.processStep {
+  font-family: var(--font-display);
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--bg-primary);
+  background: var(--accent-gold);
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  grid-row: 1;
+}
+
+.processInfo {
+  grid-row: 1;
+  padding: 0 8px;
+}
+
+.processTitle {
+  font-size: 19px;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 6px;
+}
+
+.processDesc {
+  font-size: 16px;
+  line-height: 1.6;
+  color: var(--text-muted);
+  word-break: keep-all;
+}
+
+.processArrow {
+  grid-row: 1;
+  display: flex;
+  align-items: center;
+  color: var(--accent-gold);
+  opacity: 0.4;
+  padding: 0 4px;
+}
+
+/* 과세특례 비교 */
+.comparisonGrid {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 24px;
+  margin-top: 32px;
+}
+
+.comparisonCard {
+  flex: 1;
+  max-width: 320px;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border-subtle);
+  border-radius: 8px;
+  padding: 32px 24px;
+  text-align: center;
+  transition: border-color 0.4s ease;
+}
+
+.comparisonCard:hover { border-color: var(--border-hover); }
+
+.comparisonHighlight {
+  border-color: var(--accent-gold);
+  background: rgba(212, 175, 122, 0.06);
+}
+
+.comparisonLabel {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-bottom: 16px;
+}
+
+.comparisonValue {
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 8px;
+}
+
+.comparisonHighlight .comparisonValue { color: var(--accent-gold); }
+
+.comparisonDesc {
+  font-size: 18px;
+  color: var(--text-muted);
+  word-break: keep-all;
+}
+
+.comparisonArrow {
+  color: var(--accent-gold);
+  opacity: 0.5;
+  flex-shrink: 0;
+}
+
+/* 창업자금 증여 조건 */
+.conditionGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  margin-top: 32px;
+}
+
+.conditionCard {
+  background: var(--bg-elevated);
+  border: 1px solid var(--border-subtle);
+  border-radius: 8px;
+  padding: 32px 24px;
+  text-align: center;
+  transition: transform 0.4s ease, border-color 0.4s ease;
+}
+
+.conditionCard:hover {
+  border-color: var(--border-hover);
+  transform: translateY(-4px);
+}
+
+.conditionLabel {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--text-muted);
+  margin-bottom: 8px;
+}
+
+.conditionValue {
+  font-size: 26px;
+  font-weight: 700;
+  color: var(--accent-gold);
+}
+
+/* Tablet */
+@media (max-width: 1024px) {
+  .processFlow {
+    grid-template-columns: 1fr;
+    padding: 24px;
+  }
+
+  .processItem {
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+    padding: 20px 0;
+    border-bottom: 1px solid var(--border-subtle);
+  }
+
+  .processItem:last-child { border-bottom: none; }
+  .processStep { flex-shrink: 0; }
+  .processArrow { display: none; }
+
+  .comparisonGrid {
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .comparisonCard {
+    max-width: 100%;
+    width: 100%;
+  }
+
+  .comparisonArrow { transform: rotate(90deg); }
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+  .featureBlock { margin-top: 32px; }
+  .featureCard { padding: 36px 24px; }
+
+  .conditionGrid { grid-template-columns: 1fr; }
+
+  .highlightBanner {
+    font-size: 16px;
+    padding: 16px 20px;
+  }
+}

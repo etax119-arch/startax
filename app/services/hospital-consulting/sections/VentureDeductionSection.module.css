@@ -1,0 +1,219 @@
+.section { composes: section from '../../styles/shared.module.css'; }
+.container { composes: container from '../../styles/shared.module.css'; }
+.sectionHeader { composes: sectionHeader from '../../styles/shared.module.css'; }
+.tag { composes: tag from '../../styles/shared.module.css'; }
+.sectionTitle { composes: sectionTitle from '../../styles/shared.module.css'; }
+.sectionDesc { composes: sectionDesc from '../../styles/shared.module.css'; max-width: 600px; }
+
+.contentBlock {
+  max-width: 800px;
+  margin: 0 auto 64px;
+  text-align: center;
+}
+
+.bodyText {
+  font-size: 21px;
+  line-height: 1.8;
+  color: var(--text-secondary);
+  word-break: keep-all;
+}
+
+.subTitle {
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--text-primary);
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.deductionSection {
+  margin-bottom: 72px;
+}
+
+.deductionGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 24px;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.deductionCard {
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: 8px;
+  padding: 40px 32px;
+  text-align: center;
+  transition: all 0.4s ease;
+}
+
+.deductionCard:hover {
+  border-color: var(--border-hover);
+  transform: translateY(-4px);
+}
+
+.deductionAmount {
+  font-family: var(--font-display);
+  font-size: 34px;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 8px;
+}
+
+.deductionRate {
+  font-family: var(--font-display);
+  font-size: 46px;
+  font-weight: 700;
+  color: var(--accent-gold);
+  line-height: 1;
+  margin-bottom: 8px;
+}
+
+.deductionLabel {
+  font-size: 19px;
+  color: var(--text-muted);
+  font-weight: 500;
+}
+
+.simulationSection {
+  margin-top: 16px;
+}
+
+.simulationCard {
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: 8px;
+  overflow: hidden;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.simulationHeader {
+  padding: 20px 32px;
+  background: var(--bg-elevated);
+  border-bottom: 1px solid var(--border-subtle);
+  font-size: 19px;
+  font-weight: 600;
+  color: var(--text-secondary);
+  text-align: center;
+}
+
+.simulationBody {
+  padding: 40px 32px;
+}
+
+.simulationRow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 24px;
+  margin-bottom: 40px;
+}
+
+.simulationStep {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border-subtle);
+  border-radius: 8px;
+  padding: 20px 24px;
+  flex: 1;
+  max-width: 300px;
+}
+
+.simulationStepNum {
+  font-family: var(--font-display);
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--accent-gold);
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  border: 1px solid var(--accent-gold);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  opacity: 0.7;
+}
+
+.simulationStepTitle {
+  font-size: 22px;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 4px;
+}
+
+.simulationStepDesc {
+  font-size: 19px;
+  color: var(--text-muted);
+}
+
+.simulationPlus {
+  font-family: var(--font-display);
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--accent-gold);
+  flex-shrink: 0;
+}
+
+.simulationResult {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  padding: 20px 0;
+  border-top: 1px solid var(--border-subtle);
+  margin-bottom: 16px;
+}
+
+.simulationResultLabel {
+  font-size: 22px;
+  color: var(--text-secondary);
+}
+
+.simulationResultAmount {
+  font-family: var(--font-display);
+  font-size: 32px;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.simulationRefund {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  padding: 24px;
+  background: rgba(212, 175, 122, 0.06);
+  border: 1px solid rgba(212, 175, 122, 0.15);
+  border-radius: 8px;
+}
+
+.simulationRefundLabel {
+  font-size: 22px;
+  color: var(--accent-gold);
+  font-weight: 500;
+}
+
+.simulationRefundAmount {
+  font-family: var(--font-display);
+  font-size: 36px;
+  font-weight: 700;
+  color: var(--accent-gold);
+}
+
+@media (max-width: 1024px) {
+  .deductionGrid { max-width: 100%; }
+  .simulationRow { flex-direction: column; gap: 16px; }
+  .simulationStep { max-width: 100%; width: 100%; }
+}
+
+@media (max-width: 768px) {
+  .deductionRate { font-size: 36px; }
+  .deductionAmount { font-size: 22px; }
+  .simulationRefund { flex-direction: column; gap: 8px; text-align: center; }
+  .simulationRefundAmount { font-size: 28px; }
+  .simulationResult { flex-direction: column; gap: 8px; }
+}

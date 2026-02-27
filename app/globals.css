@@ -5,20 +5,20 @@
   --bg-primary: #0D0D0D;        /* 가장 진한 검정 */
   --bg-secondary: #151515;      /* 차콜 블랙 1단계 */
   --bg-tertiary: #1A1A1A;       /* 차콜 블랙 2단계 */
-  --bg-card: #1F1F1F;           /* 카드 배경 */
-  --bg-elevated: #242424;       /* 약간 밝은 차콜 */
+  --bg-card: #1F1E1C;           /* 카드 배경 - 미세 웜톤 */
+  --bg-elevated: #252422;       /* 약간 밝은 차콜 - 미세 웜톤 */
 
-  /* Text Colors - 쿨톤 실버/회색 */
-  --text-primary: #E8E8E8;      /* 메인 텍스트 - 밝은 실버 */
-  --text-secondary: #B0B0B0;    /* 서브 텍스트 - 쿨톤 그레이 */
-  --text-muted: #888888;        /* 보조 텍스트 - 어두운 그레이 */
+  /* Text Colors - 웜톤 가미 실버/회색 */
+  --text-primary: #EDEDED;      /* 메인 텍스트 - 밝은 실버 */
+  --text-secondary: #C8C5C0;    /* 서브 텍스트 - 웜톤 그레이 (가독성 개선) */
+  --text-muted: #9E9A95;        /* 보조 텍스트 - 웜톤 그레이 (가독성 개선) */
 
   /* Accent Colors - 골드 */
   --accent-gold: #D4AF7A;
   --accent-gold-light: #E0C290;
 
   /* Borders */
-  --border-subtle: rgba(255, 255, 255, 0.05);
+  --border-subtle: rgba(255, 255, 255, 0.06);
   --border-hover: rgba(212, 175, 122, 0.3);
 }
 
@@ -32,13 +32,13 @@
   --color-text-muted: var(--text-muted);
   --color-accent-gold: var(--accent-gold);
   --color-accent-gold-light: var(--accent-gold-light);
-  --color-accent-blue: var(--accent-blue);
   --color-border-subtle: var(--border-subtle);
   --color-border-hover: var(--border-hover);
 
   --font-sans: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
-  --font-serif: 'Noto Serif KR', Georgia, serif;
-  --font-mono: 'DM Sans', sans-serif;
+  --font-serif: var(--font-noto-serif-kr, 'Noto Serif KR'), Georgia, serif;
+  /* DM Sans — used for numbers, stats, and display text */
+  --font-display: var(--font-dm-sans, 'DM Sans'), sans-serif;
 }
 
 * {
@@ -97,25 +97,21 @@ button {
   transition: all 0.3s ease;
 }
 
-/* Utility Classes */
-.section {
-  padding: 120px 24px;
-  max-width: 1200px;
-  margin: 0 auto;
+/* Skip navigation link */
+.skip-nav {
+  position: absolute;
+  top: -100%;
+  left: 16px;
+  z-index: 100000;
+  padding: 12px 24px;
+  background: var(--accent-gold);
+  color: var(--bg-primary);
+  font-weight: 600;
+  border-radius: 0 0 8px 8px;
+  text-decoration: none;
 }
 
-.container {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 24px;
+.skip-nav:focus {
+  top: 0;
 }
 
-@media (max-width: 768px) {
-  .section {
-    padding: 80px 20px;
-  }
-
-  .container {
-    padding: 0 20px;
-  }
-}

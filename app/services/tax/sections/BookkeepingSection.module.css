@@ -1,0 +1,199 @@
+/* 세무기장 및 운영컨설팅 */
+
+.section { composes: section from '../../styles/shared.module.css'; }
+.container { composes: container from '../../styles/shared.module.css'; }
+.sectionHeader { composes: sectionHeader from '../../styles/shared.module.css'; }
+.tag { composes: tag from '../../styles/shared.module.css'; }
+.sectionTitle { composes: sectionTitle from '../../styles/shared.module.css'; }
+.sectionDesc { composes: sectionDesc from '../../styles/shared.module.css'; max-width: 600px; }
+
+/* 서비스 카드 그리드 */
+.serviceGrid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+}
+
+.serviceCard {
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: 8px;
+  padding: 28px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  transition: all 0.4s ease;
+}
+
+.serviceCard:hover {
+  transform: translateY(-4px);
+  border-color: var(--border-hover);
+}
+
+.serviceCardTitle {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.serviceCardDesc {
+  font-size: 14px;
+  line-height: 1.7;
+  color: var(--text-secondary);
+  word-break: keep-all;
+}
+
+/* Feature Box */
+.featureBox {
+  margin-top: 40px;
+  display: flex;
+  align-items: stretch;
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.featureBoxLeft {
+  flex: 1;
+  padding: 32px 28px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 16px;
+}
+
+.featureBoxLabel {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--accent-gold);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.featureBoxRight {
+  width: 320px;
+  flex-shrink: 0;
+  padding: 32px 28px;
+  border-left: 1px solid var(--border-subtle);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.featureBoxTitle {
+  font-size: 20px;
+  font-weight: 400;
+  color: var(--text-primary);
+  margin-bottom: 12px;
+  line-height: 1.5;
+  word-break: keep-all;
+}
+
+.featureBoxTitle strong {
+  font-weight: 700;
+}
+
+.featureBoxDesc {
+  font-size: 14px;
+  color: var(--text-secondary);
+  margin-bottom: 6px;
+  word-break: keep-all;
+}
+
+.featureBoxBody {
+  font-size: 14px;
+  color: var(--text-muted);
+  line-height: 1.7;
+  word-break: keep-all;
+}
+
+/* Circle Flow */
+.circleFlow {
+  display: flex;
+  align-items: flex-start;
+}
+
+.circleStep {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  position: relative;
+  flex: 1;
+}
+
+.circle {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  border: 1.5px solid rgba(255, 255, 255, 0.12);
+  background: rgba(255, 255, 255, 0.08);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-secondary);
+  transition: all 0.3s ease;
+}
+
+.circle svg {
+  width: 18px;
+  height: 18px;
+  opacity: 0.85;
+}
+
+.circleFilled {
+  background: var(--accent-gold);
+  border-color: var(--accent-gold);
+  color: var(--bg-primary);
+}
+
+.circleFilled svg {
+  opacity: 1;
+}
+
+.circleLabel {
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--text-secondary);
+  text-align: center;
+  white-space: nowrap;
+}
+
+.arrow {
+  position: absolute;
+  top: 26px;
+  right: -6px;
+  transform: translateY(-50%);
+  color: var(--text-muted);
+  opacity: 0.3;
+  font-size: 12px;
+}
+
+/* Tablet */
+@media (max-width: 1024px) {
+  .serviceGrid { grid-template-columns: repeat(2, 1fr); }
+  .featureBox { flex-direction: column; }
+  .featureBoxRight {
+    width: 100%;
+    border-left: none;
+    border-top: 1px solid var(--border-subtle);
+    padding: 24px 28px;
+  }
+  .circle { width: 48px; height: 48px; }
+  .arrow { top: 24px; }
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+  .serviceGrid { grid-template-columns: 1fr; gap: 16px; }
+  .serviceCard { padding: 24px 20px; }
+  .featureBox { margin-top: 28px; }
+  .featureBoxLeft { padding: 24px 20px; }
+  .featureBoxRight { padding: 20px; }
+  .featureBoxTitle { font-size: 18px; }
+  .circle { width: 44px; height: 44px; }
+  .circle svg { width: 16px; height: 16px; }
+  .arrow { display: none; }
+  .circleLabel { font-size: 11px; }
+}

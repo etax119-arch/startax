@@ -1,0 +1,211 @@
+/* 자기주식 처분 */
+
+.sectionAlt { composes: sectionAlt from '../../../styles/shared.module.css'; }
+.container { composes: container from '../../../styles/shared.module.css'; }
+.sectionHeader { composes: sectionHeader from '../../../styles/shared.module.css'; }
+.tag { composes: tag from '../../../styles/shared.module.css'; }
+.sectionTitle { composes: sectionTitle from '../../../styles/shared.module.css'; }
+.sectionDesc { composes: sectionDesc from '../../../styles/shared.module.css'; }
+
+/* 혜택 카드 */
+.benefitHeading {
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--text-primary);
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.benefitGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 28px;
+}
+
+.benefitCard {
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: 12px;
+  padding: 44px 34px;
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.4s ease, border-color 0.4s ease;
+}
+
+.benefitCard:hover {
+  border-color: var(--border-hover);
+  transform: translateY(-4px);
+}
+
+.benefitIcon {
+  width: 62px;
+  height: 62px;
+  border-radius: 14px;
+  background: rgba(212, 175, 122, 0.1);
+  border: 1px solid rgba(212, 175, 122, 0.15);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--accent-gold);
+  margin-bottom: 28px;
+}
+
+.benefitLabel {
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--accent-gold);
+  margin-bottom: 20px;
+}
+
+.benefitDesc {
+  font-size: 17px;
+  line-height: 1.8;
+  color: var(--text-secondary);
+  word-break: keep-all;
+}
+
+.benefitSub {
+  font-size: 15px;
+  color: var(--text-muted);
+  margin-top: 10px;
+}
+
+.pairsWrap {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.pair {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 18px 20px;
+  background: var(--bg-elevated);
+  border-radius: 8px;
+  border: 1px solid var(--border-subtle);
+}
+
+.pairCondition {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--text-primary);
+  letter-spacing: -0.01em;
+}
+
+.pairResult {
+  font-size: 16px;
+  line-height: 1.6;
+  color: var(--text-muted);
+  word-break: keep-all;
+}
+
+/* Feature Block */
+.featureBlock { margin-top: 48px; }
+
+.featureCard {
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: 8px;
+  padding: 48px 40px;
+  transition: border-color 0.4s ease;
+}
+
+.featureCard:hover { border-color: var(--border-hover); }
+
+.featureNumber {
+  font-family: var(--font-display);
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--accent-gold);
+  margin-bottom: 24px;
+  opacity: 0.6;
+}
+
+.featureTitle {
+  font-size: 25px;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 16px;
+}
+
+/* 전략적 활용 */
+.strategyGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  margin-top: 32px;
+}
+
+.strategyCard {
+  background: var(--bg-elevated);
+  border: 1px solid var(--border-subtle);
+  border-radius: 8px;
+  padding: 32px 24px;
+  text-align: center;
+  transition: transform 0.4s ease, border-color 0.4s ease;
+}
+
+.strategyCard:hover {
+  border-color: var(--border-hover);
+  transform: translateY(-4px);
+}
+
+.strategyTitle {
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 10px;
+}
+
+.strategyDesc {
+  font-size: 18px;
+  color: var(--text-muted);
+  word-break: keep-all;
+}
+
+/* 세무 관련 */
+.taxGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 24px;
+  margin-top: 32px;
+}
+
+.taxCard {
+  background: var(--bg-elevated);
+  border: 1px solid var(--border-subtle);
+  border-radius: 8px;
+  padding: 32px 28px;
+  transition: border-color 0.4s ease;
+}
+
+.taxCard:hover { border-color: var(--border-hover); }
+
+.taxLabel {
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--accent-gold);
+  margin-bottom: 14px;
+}
+
+.taxDesc {
+  font-size: 20px;
+  line-height: 1.7;
+  color: var(--text-secondary);
+  word-break: keep-all;
+}
+
+/* Tablet */
+@media (max-width: 1024px) {
+  .benefitGrid { grid-template-columns: 1fr; }
+  .strategyGrid { grid-template-columns: repeat(2, 1fr); }
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+  .featureBlock { margin-top: 32px; }
+  .featureCard { padding: 36px 24px; }
+  .strategyGrid,
+  .taxGrid { grid-template-columns: 1fr; }
+}

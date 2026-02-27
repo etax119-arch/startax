@@ -1,37 +1,41 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# startaxwebsite
 
-## Getting Started
+STARTAX 소개 웹사이트(Next.js App Router) 프로젝트입니다.
 
-First, run the development server:
+## 실행
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+- 개발 서버: `http://localhost:3000`
+- 프로덕션 빌드: `npm run build`
+- 린트: `npm run lint`
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## 폴더 구조
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```text
+.
+├── app/                     # 페이지/레이아웃/도메인 UI (App Router)
+│   ├── components/          # 공통 섹션 컴포넌트
+│   ├── context/             # 전역 컨텍스트
+│   └── services/            # 서비스 상세 페이지 및 전용 컴포넌트
+├── public/
+│   └── assets/
+│       └── used/            # 실제 서비스에서 참조되는 정적 파일
+├── assets/
+│   └── unused/              # 작업용/보관용 원본 에셋 (배포 미사용)
+└── ...
+```
 
-## Learn More
+## 에셋 규칙
 
-To learn more about Next.js, take a look at the following resources:
+- 사용자에게 노출되는 이미지/정적 파일은 `public/assets/used` 아래에 둡니다.
+- 코드에서 참조할 경로는 `/assets/used/...` 형태를 사용합니다.
+- 작업 중 임시/보관 에셋은 `assets/unused`에 두고 Git 추적에서 제외합니다.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Git 관리 규칙
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
-# startaxwebsite
+- `.next`, `node_modules`, `.idea`, `assets/unused`는 버전 관리에서 제외합니다.
+- IDE 개별 설정은 각자 로컬 환경에서 관리합니다.

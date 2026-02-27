@@ -1,0 +1,55 @@
+.prev,
+.next {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 3;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: var(--text-muted);
+  font-size: 18px;
+  font-weight: 400;
+  text-decoration: none;
+  transition: color 0.25s ease;
+  white-space: nowrap;
+}
+
+.prev {
+  left: 40px;
+}
+
+.next {
+  right: 40px;
+}
+
+.prev:hover,
+.next:hover {
+  color: var(--text-primary);
+}
+
+.label {
+  white-space: nowrap;
+}
+
+@media (max-width: 1200px) {
+  .prev { left: 24px; }
+  .next { right: 24px; }
+}
+
+@media (max-width: 768px) {
+  .prev,
+  .next {
+    font-size: 15px;
+    gap: 8px;
+  }
+
+  .prev { left: 16px; }
+  .next { right: 16px; }
+
+  .prev svg,
+  .next svg {
+    width: 8px;
+    height: 14px;
+  }
+}

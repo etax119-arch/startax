@@ -23,6 +23,10 @@
 # misc
 .DS_Store
 *.pem
+.idea/
+
+# local working assets (not served in production)
+assets/unused/
 
 # debug
 npm-debug.log*

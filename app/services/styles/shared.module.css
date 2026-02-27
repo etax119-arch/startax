@@ -1,0 +1,159 @@
+/* ═══════════════════════════════════════════════════
+   서비스 페이지 공통 스타일
+   사용처: tax, consulting, hospital-consulting
+   ═══════════════════════════════════════════════════ */
+
+/* ── Hero ── */
+.hero {
+  position: relative;
+  background: var(--bg-primary);
+  text-align: center;
+  overflow: hidden;
+}
+
+.heroGlow {
+  position: absolute;
+  top: 40%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 600px;
+  height: 600px;
+  background: radial-gradient(circle, rgba(212, 175, 122, 0.22) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.heroContent {
+  position: relative;
+  z-index: 2;
+  max-width: 800px;
+  margin: 0 auto;
+  animation: fadeInUp 0.8s ease-out;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.tag {
+  font-size: 19px;
+  letter-spacing: 0.2em;
+  color: var(--accent-gold);
+  font-weight: 600;
+  text-transform: uppercase;
+  margin-bottom: 16px;
+}
+
+.heroTitle {
+  font-family: var(--font-serif);
+  font-size: 48px;
+  font-weight: 700;
+  color: var(--text-primary);
+  letter-spacing: -0.02em;
+  line-height: 1.3;
+  margin-bottom: 24px;
+}
+
+.goldText {
+  color: var(--accent-gold);
+}
+
+.heroDesc {
+  font-size: 21px;
+  color: var(--text-secondary);
+  line-height: 1.8;
+  word-break: keep-all;
+}
+
+/* ── Section Layout ── */
+.section {
+  padding: 120px 24px;
+  background: var(--bg-secondary);
+}
+
+.sectionAlt {
+  padding: 120px 24px;
+  background: var(--bg-primary);
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.sectionHeader {
+  text-align: center;
+  margin-bottom: 72px;
+}
+
+.sectionTitle {
+  font-family: var(--font-serif);
+  font-size: 40px;
+  font-weight: 700;
+  color: var(--text-primary);
+  letter-spacing: -0.02em;
+  margin-bottom: 20px;
+}
+
+.sectionTitle::after {
+  content: '';
+  display: block;
+  width: 40px;
+  height: 2px;
+  background: var(--accent-gold);
+  margin: 16px auto 0;
+  opacity: 0.6;
+}
+
+.sectionDesc {
+  font-size: 24px;
+  color: var(--text-secondary);
+  line-height: 1.8;
+  max-width: 700px;
+  margin: 0 auto;
+  word-break: keep-all;
+}
+
+/* ── Responsive ── */
+@media (max-width: 1024px) {
+  .heroTitle {
+    font-size: 40px;
+  }
+
+  .sectionTitle {
+    font-size: 34px;
+  }
+}
+
+@media (max-width: 768px) {
+  .heroTitle {
+    font-size: 30px;
+  }
+
+  .heroDesc {
+    font-size: 17px;
+  }
+
+  .section,
+  .sectionAlt {
+    padding: 80px 20px;
+  }
+
+  .sectionTitle {
+    font-size: 28px;
+  }
+
+  .sectionDesc {
+    font-size: 20px;
+  }
+
+  .sectionHeader {
+    margin-bottom: 48px;
+  }
+}
