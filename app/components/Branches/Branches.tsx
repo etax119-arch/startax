@@ -152,6 +152,7 @@ export default function Branches() {
               onClick={() => openModal(branch)}
               role="button"
               tabIndex={0}
+              aria-label={`${branch.name}점 상세보기`}
               onKeyDown={(e) => e.key === 'Enter' && openModal(branch)}
             >
               <div className={styles.cardHeader}>

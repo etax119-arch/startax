@@ -22,19 +22,21 @@
 .logo {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 16px;
   text-decoration: none;
 }
 
 .logoIcon {
-  width: 32px;
-  height: 32px;
+  width: auto;
+  height: 29px;
   object-fit: contain;
+  position: relative;
+  top: 1px;
 }
 
 .logoMain {
   font-family: var(--font-serif);
-  font-size: 24px;
+  font-size: 28px;
   font-weight: 700;
   color: var(--accent-gold);
   letter-spacing: 0.05em;
@@ -80,7 +82,7 @@
   }
 
   .logoIcon {
-    width: 28px;
-    height: 28px;
+    width: auto;
+    height: 40px;
   }
 }

@@ -48,6 +48,7 @@ export default function About() {
                 width={400}
                 height={500}
                 className={styles.photo}
+                priority
               />
               <div className={styles.photoGradient}></div>
             </div>

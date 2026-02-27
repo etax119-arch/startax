@@ -39,7 +39,7 @@ export default function Navigation() {
       <nav className={`${styles.nav} ${isScrolled ? styles.scrolled : ''}`}>
         <div className={styles.container}>
           <div className={styles.logo}>
-            <Image src="/assets/used/logo/startax-logo.png" alt="STARTAX" width={32} height={32} className={styles.logoIcon} />
+            <Image src="/assets/used/logo/startax_logo.png" alt="STARTAX" width={270} height={310} className={styles.logoIcon} priority />
             <span className={styles.logoMain}>STARTAX</span>
             <span className={styles.logoSub}>세무법인 스타택스</span>
           </div>
