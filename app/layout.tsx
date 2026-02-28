@@ -35,6 +35,9 @@ export const metadata: Metadata = {
     title: "세무법인 스타택스",
     description: "병원의 성장 뒤에는 스타택스가 있습니다! 병의원 전문 세무경영 컨설팅부터 법인·상속·경정청구 등 10년 이상의 전문가들과 원스톱으로 함께합니다.",
   },
+  alternates: {
+    canonical: "https://www.startaxltd.com",
+  },
 };
 
 const jsonLd = {
@@ -80,6 +83,7 @@ export default function RootLayout({
   return (
     <html lang="ko" className={`${notoSerifKr.variable} ${dmSans.variable}`} suppressHydrationWarning>
       <head>
+        <meta name="naver-site-verification" content="navera0ce0e11369b7cf64e2efe139ad39aa1" />
         <link rel="preconnect" href="https://cdn.jsdelivr.net" />
         <link
           href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard-dynamic-subset.min.css"

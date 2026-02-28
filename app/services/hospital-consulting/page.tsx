@@ -17,6 +17,7 @@ export const metadata: Metadata = {
     title: '병의원 컨설팅 | 세무법인 스타택스',
     description: '세무진단·조사 대응, 사내근로복지기금, MSO 설립·운영, 복지몰, 벤처투자 소득공제, 기업부설연구소 — 병의원에 특화된 절세·경영 지원 컨설팅을 제공합니다.',
   },
+  alternates: { canonical: "https://www.startaxltd.com/services/hospital-consulting" },
 };
 
 const SECTIONS = [

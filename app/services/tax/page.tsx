@@ -15,6 +15,7 @@ export const metadata: Metadata = {
     title: '세무 서비스 | 세무법인 스타택스',
     description: '병의원 세무기장, 경정청구, 양도양수, 상속증여까지 — 스타택스의 10년 이상 경력 세무 전문가가 병원장님의 절세와 안정적인 세무 운영을 원스톱으로 지원합니다.',
   },
+  alternates: { canonical: "https://www.startaxltd.com/services/tax" },
 };
 
 const SECTIONS = [
