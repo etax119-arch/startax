@@ -34,7 +34,7 @@ function renderSlogan(text: string): React.ReactNode {
 const branchData: Branch[] = [
   {
     id: 'gangnam',
-    name: '강남',
+    name: '강남점',
     taxAgent: '조준섭',
     title: '세무사',
     slogan: renderSlogan('<strong>국세청 14년 경력!</strong> 어떤 세무사와 함께 하느냐에 따라<br/>사업의 미래가 달라집니다.'),
@@ -45,7 +45,7 @@ const branchData: Branch[] = [
   },
   {
     id: 'namyangju',
-    name: '남양주',
+    name: '남양주점',
     taxAgent: '김명하',
     title: '세무사',
     slogan: renderSlogan('<strong>일등세무 해결사!</strong><br/>김명하 입니다.'),
@@ -56,7 +56,7 @@ const branchData: Branch[] = [
   },
   {
     id: 'bucheon',
-    name: '부천',
+    name: '부천점',
     taxAgent: '김용삼',
     title: '세무사',
     slogan: renderSlogan('첫 마음 그대로.<br/><strong>고객과 함께</strong>하겠습니다.'),
@@ -78,7 +78,7 @@ const branchData: Branch[] = [
   },
   {
     id: 'yeouido',
-    name: '여의도',
+    name: '여의도점',
     taxAgent: '강연지',
     title: '세무사',
     slogan: renderSlogan('<strong>풍부한 경험과 친절한 서비스</strong>로 든든한 절세파트너가 되겠습니다.'),
@@ -89,7 +89,7 @@ const branchData: Branch[] = [
   },
   {
     id: 'suwon',
-    name: '수원',
+    name: '수원점',
     taxAgent: '김동현',
     title: '세무사',
     slogan: renderSlogan('빠르게 변화하는 세법에<br/><strong>발맞춰 연구하며, 대응</strong>하고<br/>가능성을 제시합니다.'),
