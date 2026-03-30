@@ -67,7 +67,7 @@ const branchData: Branch[] = [
   },
   {
     id: 'bucheonnam',
-    name: '부천남지',
+    name: '부천남지점',
     taxAgent: '이하윤',
     title: '세무사',
     slogan: renderSlogan('세법에 대해 조금이라도<br/><strong>쉽게 알 수 있도록 노력</strong>하고 있습니다.'),
