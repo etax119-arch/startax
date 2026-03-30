@@ -82,7 +82,7 @@ const branchData: Branch[] = [
     taxAgent: '강연지',
     title: '세무사',
     slogan: renderSlogan('<strong>풍부한 경험과 친절한 서비스</strong>로 든든한 절세파트너가 되겠습니다.'),
-    phone: '0507-1378-2360',
+    phone: '02-761-2360',
     address: '서울시 영등포구 버드나루로 139, 대한빌딩 502호',
     photo: '/assets/used/branches/yeouido-v2.png',
     link: 'https://blog.naver.com/jeetax81',
