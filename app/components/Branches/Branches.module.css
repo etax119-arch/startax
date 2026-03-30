@@ -266,6 +266,11 @@
   transform: scale(1.25) translateX(-5%);
 }
 
+/* 여의도 - 강연지 */
+.profileImageYeouido {
+  transform: scale(1.4) translate(-2%, -10%);
+}
+
 .profilePlaceholder {
   display: flex;
   flex-direction: column;

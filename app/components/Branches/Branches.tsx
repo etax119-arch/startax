@@ -81,10 +81,10 @@ const branchData: Branch[] = [
     name: '여의도',
     taxAgent: '강연지',
     title: '세무사',
-    slogan: renderSlogan('<strong>성실함과 노력</strong>으로 증명하겠습니다.'),
+    slogan: renderSlogan('<strong>풍부한 경험과 친절한 서비스</strong>로 든든한 절세파트너가 되겠습니다.'),
     phone: '0507-1378-2360',
-    address: '서울 영등포구 당산로 171-173',
-    photo: '/assets/used/branches/yeouido.png',
+    address: '서울시 영등포구 버드나루로 139, 대한빌딩 502호',
+    photo: '/assets/used/branches/yeouido-v2.png',
     link: 'https://blog.naver.com/jeetax81',
   },
   {
@@ -105,6 +105,7 @@ const PROFILE_IMAGE_STYLES: Record<string, string | undefined> = {
   bucheon: styles.profileImageBucheon,
   bucheonnam: styles.profileImageBucheonnam,
   suwon: styles.profileImageSuwon,
+  yeouido: styles.profileImageYeouido,
 };
 
 export default function Branches() {
