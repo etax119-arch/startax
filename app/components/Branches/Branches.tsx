@@ -153,7 +153,7 @@ export default function Branches() {
               onClick={() => openModal(branch)}
               role="button"
               tabIndex={0}
-              aria-label={`${branch.name}점 상세보기`}
+              aria-label={`${branch.name} 상세보기`}
               onKeyDown={(e) => e.key === 'Enter' && openModal(branch)}
             >
               <div className={styles.cardHeader}>
@@ -226,7 +226,7 @@ export default function Branches() {
 
               {/* Info Area */}
               <div className={styles.modalInfo}>
-                <div className={styles.modalBranchTag}>{selectedBranch.name}점</div>
+                <div className={styles.modalBranchTag}>{selectedBranch.name}</div>
                 <h3 id="modal-title" className={styles.modalName}>
                   {selectedBranch.taxAgent} <span className={styles.modalTitle}>{selectedBranch.title}</span>
                 </h3>
