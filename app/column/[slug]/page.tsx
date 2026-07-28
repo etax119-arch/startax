@@ -56,7 +56,9 @@ export async function generateMetadata({ params }: ColumnDetailProps): Promise<M
       locale: 'ko_KR',
       publishedTime: column.published_at ?? column.created_at,
       modifiedTime: column.updated_at,
-      images: [{ url: image, width: 1200, height: 630 }],
+      // 크기를 단정하지 않습니다 — 대표 이미지는 어떤 비율이든 올 수 있어서,
+      // 1200x630 으로 못박으면 세로 사진일 때 공유 미리보기가 잘못 잘립니다.
+      images: [image],
     },
     twitter: {
       card: 'summary_large_image',
