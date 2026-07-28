@@ -1,0 +1,25 @@
+.page {
+  composes: page from './styles/shared.module.css';
+}
+
+.body {
+  composes: narrow from './styles/shared.module.css';
+  composes: centered from './styles/shared.module.css';
+}
+
+.tag {
+  composes: tag from './styles/shared.module.css';
+}
+
+.title {
+  composes: pageTitle from './styles/shared.module.css';
+}
+
+.desc {
+  composes: pageDesc from './styles/shared.module.css';
+}
+
+.backButton {
+  composes: backButton from './styles/shared.module.css';
+  margin-top: 32px;
+}

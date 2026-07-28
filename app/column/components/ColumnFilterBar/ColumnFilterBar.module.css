@@ -1,0 +1,40 @@
+.bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.chip {
+  padding: 8px 18px;
+  border: 1px solid var(--border-subtle);
+  border-radius: 999px;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text-secondary);
+  background: var(--bg-card);
+  text-decoration: none;
+  white-space: nowrap;
+  transition: all 0.3s ease;
+}
+
+.chip:hover {
+  border-color: var(--border-hover);
+  color: var(--text-primary);
+}
+
+.chipActive {
+  border-color: var(--accent-gold);
+  color: var(--accent-gold);
+  background: var(--bg-elevated);
+}
+
+@media (max-width: 768px) {
+  .bar {
+    gap: 8px;
+  }
+
+  .chip {
+    padding: 7px 14px;
+    font-size: 13px;
+  }
+}

@@ -1,0 +1,73 @@
+.page {
+  composes: page from './styles/shared.module.css';
+}
+
+.container {
+  composes: container from './styles/shared.module.css';
+}
+
+.tag {
+  composes: tag from './styles/shared.module.css';
+}
+
+.title {
+  composes: pageTitle from './styles/shared.module.css';
+}
+
+.desc {
+  composes: pageDesc from './styles/shared.module.css';
+}
+
+.header {
+  margin-bottom: 40px;
+}
+
+.controls {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  padding-bottom: 24px;
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.resultMeta {
+  margin-top: 24px;
+  font-size: 14px;
+  color: var(--text-muted);
+}
+
+.resultMeta strong {
+  color: var(--accent-gold);
+  font-weight: 600;
+}
+
+.list {
+  margin-top: 8px;
+}
+
+.empty {
+  padding: 80px 0;
+  text-align: center;
+  font-size: 16px;
+  color: var(--text-muted);
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+@media (max-width: 768px) {
+  .header {
+    margin-bottom: 28px;
+  }
+
+  .controls {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 16px;
+    padding-bottom: 20px;
+  }
+
+  .empty {
+    padding: 56px 0;
+    font-size: 15px;
+  }
+}

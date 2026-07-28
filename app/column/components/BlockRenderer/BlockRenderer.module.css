@@ -1,0 +1,87 @@
+.content {
+  max-width: 760px;
+  margin: 0 auto;
+}
+
+.paragraph {
+  font-size: 17px;
+  line-height: 1.9;
+  color: var(--text-secondary);
+  margin-bottom: 28px;
+  /* 한국어 줄바꿈은 어절 단위로 끊어야 읽힙니다. */
+  word-break: keep-all;
+}
+
+.paragraph:last-child {
+  margin-bottom: 0;
+}
+
+.heading {
+  font-family: var(--font-serif);
+  font-size: 26px;
+  font-weight: 700;
+  line-height: 1.5;
+  letter-spacing: -0.02em;
+  color: var(--text-primary);
+  margin: 56px 0 20px;
+  padding-left: 14px;
+  border-left: 3px solid var(--accent-gold);
+  word-break: keep-all;
+}
+
+.heading:first-child {
+  margin-top: 0;
+}
+
+.figure {
+  margin: 40px 0;
+}
+
+/*
+  기본은 본문 폭을 꽉 채우되(width: 100%), 세로가 --column-image-max-height 에
+  닿는 지점의 가로 길이를 상한으로 둡니다.
+  세로로 긴 사진은 그 상한에서 멈추고, 남는 좌우 여백에 대해 중앙 정렬됩니다.
+  --column-image-ratio 가 없으면(비율 미저장) 예전처럼 폭을 꽉 채웁니다.
+*/
+.image {
+  width: 100%;
+  height: auto;
+  max-width: calc(
+    var(--column-image-max-height, 400px) * var(--column-image-ratio, 1000)
+  );
+  border-radius: 8px;
+  border: 1px solid var(--border-subtle);
+  display: block;
+  margin-inline: auto;
+}
+
+.caption {
+  margin-top: 12px;
+  font-size: 14px;
+  line-height: 1.7;
+  color: var(--text-muted);
+  text-align: center;
+  word-break: keep-all;
+}
+
+@media (max-width: 768px) {
+  .paragraph {
+    font-size: 16px;
+    line-height: 1.85;
+    margin-bottom: 24px;
+  }
+
+  .heading {
+    font-size: 21px;
+    margin: 40px 0 16px;
+    padding-left: 12px;
+  }
+
+  .figure {
+    margin: 32px 0;
+  }
+
+  .caption {
+    font-size: 13px;
+  }
+}

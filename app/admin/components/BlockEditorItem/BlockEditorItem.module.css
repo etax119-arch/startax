@@ -1,0 +1,126 @@
+.item {
+  border: 1px solid var(--border-subtle);
+  border-radius: 10px;
+  background: var(--bg-card);
+  overflow: hidden;
+}
+
+.toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 10px 14px;
+  background: var(--bg-tertiary);
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.badge {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--accent-gold);
+}
+
+.toolbarActions {
+  display: flex;
+  gap: 6px;
+}
+
+.iconButton {
+  composes: secondaryButton from '../../styles/form.module.css';
+  width: 28px;
+  height: 28px;
+  padding: 0;
+  font-size: 13px;
+  line-height: 1;
+}
+
+.iconButton:hover:not(:disabled) {
+  border-color: var(--accent-gold);
+  color: var(--accent-gold);
+}
+
+.iconButton:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+.removeButton:hover:not(:disabled) {
+  border-color: rgba(220, 90, 90, 0.6);
+  color: #dc5a5a;
+}
+
+.body {
+  padding: 16px;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: 240px 1fr;
+  gap: 20px;
+  align-items: start;
+}
+
+.fields {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  min-width: 0;
+}
+
+.formGroup {
+  composes: formGroup from '../../styles/form.module.css';
+}
+
+.label {
+  composes: label from '../../styles/form.module.css';
+}
+
+.hint {
+  composes: hint from '../../styles/form.module.css';
+}
+
+.input {
+  composes: input from '../../styles/form.module.css';
+}
+
+.textarea {
+  composes: textarea from '../../styles/form.module.css';
+  min-height: 160px;
+}
+
+.error {
+  composes: fieldError from '../../styles/form.module.css';
+  font-size: 12px;
+}
+
+.thumbSlot {
+  display: flex;
+}
+
+.thumb {
+  composes: mediaBox from '../../styles/form.module.css';
+  width: 240px;
+  aspect-ratio: 16 / 9;
+}
+
+.thumbImage {
+  composes: mediaImage from '../../styles/form.module.css';
+}
+
+.thumbEmpty {
+  composes: mediaBoxEmpty from '../../styles/form.module.css';
+  width: 240px;
+  aspect-ratio: 16 / 9;
+}
+
+@media (max-width: 768px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+
+  .thumb,
+  .thumbEmpty {
+    width: 100%;
+  }
+}

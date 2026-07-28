@@ -4,6 +4,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import styles from './ServiceNav.module.css';
 import { useConsultation } from '../../context/ConsultationContext';
+import { COLUMN_BASE_PATH } from '../../lib/columns/href';
 
 export default function ServiceNav() {
   const { openModal } = useConsultation();
@@ -16,9 +17,14 @@ export default function ServiceNav() {
           <span className={styles.logoMain}>STARTAX</span>
           <span className={styles.logoSub}>세무법인 스타택스</span>
         </Link>
-        <button onClick={openModal} className={styles.ctaButton}>
-          상담신청
-        </button>
+        <div className={styles.navMenu}>
+          <Link href={COLUMN_BASE_PATH} className={styles.navLink}>
+            Column
+          </Link>
+          <button onClick={openModal} className={styles.ctaButton}>
+            상담신청
+          </button>
+        </div>
       </div>
     </nav>
   );

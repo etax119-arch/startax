@@ -1,0 +1,144 @@
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+}
+
+.headerRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.pageTitle {
+  font-family: var(--font-serif);
+  font-size: 26px;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 28px;
+  border: 1px solid var(--border-subtle);
+  border-radius: 12px;
+  background: var(--bg-secondary);
+}
+
+.sectionTitle {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--accent-gold);
+  letter-spacing: 0.05em;
+}
+
+.row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+.formGroup {
+  composes: formGroup from '../../styles/form.module.css';
+}
+
+.label {
+  composes: label from '../../styles/form.module.css';
+}
+
+.required {
+  composes: required from '../../styles/form.module.css';
+}
+
+.hint {
+  composes: hint from '../../styles/form.module.css';
+  word-break: break-all;
+}
+
+.input {
+  composes: input from '../../styles/form.module.css';
+}
+
+.select {
+  composes: select from '../../styles/form.module.css';
+}
+
+.excerptTextarea {
+  composes: textarea from '../../styles/form.module.css';
+  min-height: 90px;
+}
+
+.checkbox {
+  composes: checkbox from '../../styles/form.module.css';
+}
+
+.errorMessage {
+  composes: errorMessage from '../../styles/form.module.css';
+}
+
+.primaryButton {
+  composes: primaryButton from '../../styles/form.module.css';
+}
+
+.secondaryButton {
+  composes: secondaryButton from '../../styles/form.module.css';
+  padding: 10px 20px;
+  font-size: 14px;
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 20px 24px;
+  border: 1px solid var(--border-subtle);
+  border-radius: 12px;
+  background: var(--bg-card);
+}
+
+.publishToggle {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--text-primary);
+  cursor: pointer;
+}
+
+.publishHint {
+  display: block;
+  margin-top: 4px;
+  font-size: 12px;
+  font-weight: 400;
+  color: var(--text-muted);
+}
+
+@media (max-width: 768px) {
+  .section {
+    padding: 20px;
+  }
+
+  .row {
+    grid-template-columns: 1fr;
+  }
+
+  .pageTitle {
+    font-size: 21px;
+  }
+
+  .actions {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 16px;
+    padding: 18px;
+  }
+
+  .primaryButton {
+    width: 100%;
+  }
+}

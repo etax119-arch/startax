@@ -49,6 +49,25 @@
   border-left: 1px solid var(--border-subtle);
 }
 
+.navMenu {
+  display: flex;
+  align-items: center;
+  gap: 28px;
+}
+
+.navLink {
+  font-size: 15px;
+  color: var(--text-primary);
+  font-weight: 500;
+  text-decoration: none;
+  transition: color 0.3s ease;
+  white-space: nowrap;
+}
+
+.navLink:hover {
+  color: var(--accent-gold);
+}
+
 .ctaButton {
   padding: 10px 24px;
   border: 1px solid var(--accent-gold);
@@ -84,5 +103,13 @@
   .logoIcon {
     width: auto;
     height: 40px;
+  }
+
+  .navMenu {
+    gap: 16px;
+  }
+
+  .navLink {
+    font-size: 14px;
   }
 }

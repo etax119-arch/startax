@@ -28,6 +28,7 @@
   display: flex;
   align-items: center;
   gap: 16px;
+  text-decoration: none;
 }
 
 .logoIcon {
@@ -68,9 +69,17 @@
   border: none;
   cursor: pointer;
   padding: 0;
+  /* 항목이 <button> 또는 <a> 로 렌더되므로 앵커 기본 스타일을 맞춰줍니다. */
+  text-decoration: none;
+  display: inline-block;
+  white-space: nowrap;
 }
 
 .navLink:hover {
+  color: var(--accent-gold);
+}
+
+.navLinkActive {
   color: var(--accent-gold);
 }
 
@@ -148,6 +157,7 @@
   border: none;
   cursor: pointer;
   padding: 0;
+  text-decoration: none;
 }
 
 .mobileNavLink:hover {
@@ -166,9 +176,32 @@
   cursor: pointer;
 }
 
+@media (max-width: 1280px) {
+  .container {
+    padding: 0 60px;
+  }
+
+  /* 항목이 5개라 좁은 데스크톱에서 간격을 줄여야 로고와 붙지 않습니다. */
+  .desktopMenu {
+    gap: 28px;
+  }
+}
+
 @media (max-width: 1024px) {
   .container {
     padding: 0 40px;
+  }
+
+  .desktopMenu {
+    gap: 22px;
+  }
+
+  .navLink {
+    font-size: 16px;
+  }
+
+  .logoSub {
+    display: none;
   }
 }
 

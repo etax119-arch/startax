@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import { SITE_URL } from '../../lib/site';
 import ServicePageNav from '../components/ServicePageNav';
 import ServiceKeywordNav from '../components/ServiceKeywordNav';
 import ServiceCTA from '../components/ServiceCTA';
@@ -16,7 +17,7 @@ export const metadata: Metadata = {
     title: '경영 컨설팅 | 세무법인 스타택스',
     description: '벤처인증, 자기주식 처분, 가업승계, 법인전환, 부동산·재무 컨설팅까지 — 스타택스가 기업의 성장 전략과 안정적인 경영을 함께 설계합니다.',
   },
-  alternates: { canonical: "https://www.startaxltd.com/services/consulting" },
+  alternates: { canonical: `${SITE_URL}/services/consulting` },
 };
 
 const SECTIONS = [

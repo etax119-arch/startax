@@ -1,0 +1,211 @@
+/* ═══════════════════════════════════════════════════
+   관리자 화면 공통 스타일
+   각 컴포넌트에서 composes: 로 가져다 쓰세요.
+
+   폼 컨트롤 룰은 app/components/ConsultationModal/ConsultationModal.module.css
+   와 의도적으로 같은 값을 씁니다(같은 디자인 토큰). 상담 모달은 공개 사이트 쪽
+   컴포넌트라 관리자 스타일시트에 의존시키지 않으려고 통합하지 않았습니다.
+   토큰을 바꿀 때는 두 파일을 함께 확인하세요.
+   ═══════════════════════════════════════════════════ */
+
+.formGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.label {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text-secondary);
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.required {
+  color: var(--accent-gold);
+}
+
+.hint {
+  font-size: 12px;
+  color: var(--text-muted);
+  line-height: 1.6;
+}
+
+.input,
+.select,
+.textarea {
+  width: 100%;
+  padding: 14px 16px;
+  background: var(--bg-tertiary);
+  border: 1px solid var(--border-subtle);
+  border-radius: 8px;
+  color: var(--text-primary);
+  font-size: 15px;
+  font-family: var(--font-sans);
+  transition: all 0.3s ease;
+}
+
+.input::placeholder,
+.textarea::placeholder {
+  color: var(--text-muted);
+}
+
+.input:focus,
+.select:focus,
+.textarea:focus {
+  outline: none;
+  border-color: var(--accent-gold);
+  background: var(--bg-elevated);
+}
+
+.select {
+  cursor: pointer;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23C8C5C0' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 16px center;
+  padding-right: 40px;
+}
+
+.select option {
+  background: var(--bg-secondary);
+  color: var(--text-primary);
+}
+
+.textarea {
+  min-height: 140px;
+  resize: vertical;
+  line-height: 1.7;
+}
+
+.checkbox {
+  width: 20px;
+  height: 20px;
+  accent-color: var(--accent-gold);
+  cursor: pointer;
+}
+
+.primaryButton {
+  padding: 14px 32px;
+  border: 1px solid var(--accent-gold);
+  border-radius: 4px;
+  background: var(--accent-gold);
+  color: var(--bg-primary);
+  font-size: 15px;
+  font-weight: 600;
+  font-family: var(--font-sans);
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.primaryButton:hover:not(:disabled) {
+  background: var(--accent-gold-light);
+  border-color: var(--accent-gold-light);
+}
+
+.primaryButton:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.secondaryButton {
+  padding: 14px 28px;
+  border: 1px solid var(--border-subtle);
+  border-radius: 4px;
+  background: transparent;
+  color: var(--text-secondary);
+  font-size: 15px;
+  font-weight: 500;
+  font-family: var(--font-sans);
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+}
+
+.secondaryButton:hover:not(:disabled) {
+  border-color: var(--border-hover);
+  color: var(--text-primary);
+}
+
+.dangerButton {
+  padding: 10px 18px;
+  border: 1px solid rgba(220, 90, 90, 0.35);
+  border-radius: 4px;
+  background: transparent;
+  color: #dc5a5a;
+  font-size: 14px;
+  font-weight: 500;
+  font-family: var(--font-sans);
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.dangerButton:hover:not(:disabled) {
+  background: rgba(220, 90, 90, 0.12);
+  border-color: rgba(220, 90, 90, 0.6);
+}
+
+.dangerButton:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.errorMessage {
+  padding: 12px 16px;
+  border: 1px solid rgba(220, 90, 90, 0.35);
+  border-radius: 8px;
+  background: rgba(220, 90, 90, 0.08);
+  color: #e88686;
+  font-size: 14px;
+  line-height: 1.6;
+  word-break: keep-all;
+}
+
+/** 입력 필드 바로 아래에 붙는 인라인 오류 문구. */
+.fieldError {
+  font-size: 13px;
+  color: #e88686;
+  line-height: 1.6;
+}
+
+/** 목록이 비었을 때 보여주는 점선 안내 박스. */
+.emptyState {
+  text-align: center;
+  color: var(--text-muted);
+  border: 1px dashed var(--border-subtle);
+  border-radius: 10px;
+  background: var(--bg-card);
+  word-break: keep-all;
+}
+
+/** 이미지·영상 미리보기 상자. 비어 있을 땐 mediaBoxEmpty 를 씁니다. */
+.mediaBox {
+  position: relative;
+  border-radius: 8px;
+  overflow: hidden;
+  border: 1px solid var(--border-subtle);
+  background: var(--bg-card);
+}
+
+.mediaBoxEmpty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  border: 1px dashed var(--border-subtle);
+  border-radius: 8px;
+  background: var(--bg-tertiary);
+  color: var(--text-muted);
+  font-size: 13px;
+}
+
+/* 잘라내지 않고 원본 비율 그대로 보여줍니다 — 세로로 긴 사진인지 작성자가 알 수 있게. */
+.mediaImage {
+  object-fit: contain;
+}

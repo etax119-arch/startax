@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Noto_Serif_KR, DM_Sans } from "next/font/google";
 import "./globals.css";
 import { ConsultationProvider } from "./context/ConsultationContext";
+import { SITE_LOGO_URL, SITE_NAME, SITE_URL } from "./lib/site";
 
 const notoSerifKr = Noto_Serif_KR({
   subsets: ["latin"],
@@ -18,7 +19,7 @@ const dmSans = DM_Sans({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://www.startaxltd.com"),
+  metadataBase: new URL(SITE_URL),
   title: "세무법인 스타택스",
   description: "병원의 성장 뒤에는 스타택스가 있습니다! 병의원 전문 세무경영 컨설팅부터 법인·상속·경정청구 등 10년 이상의 전문가들과 원스톱으로 함께합니다.",
   keywords: "스타택스, 세무법인, 병원절세, 병원세무사, 병의원 세무사, 병원 컨설팅, 병원 세무법인, 법인 병원",
@@ -26,9 +27,9 @@ export const metadata: Metadata = {
     title: "세무법인 스타택스",
     description: "병원의 성장 뒤에는 스타택스가 있습니다! 병의원 전문 세무경영 컨설팅부터 법인·상속·경정청구 등 10년 이상의 전문가들과 원스톱으로 함께합니다.",
     type: "website",
-    url: "https://www.startaxltd.com",
+    url: SITE_URL,
     locale: "ko_KR",
-    siteName: "세무법인 스타택스",
+    siteName: SITE_NAME,
   },
   twitter: {
     card: "summary_large_image",
@@ -36,17 +37,17 @@ export const metadata: Metadata = {
     description: "병원의 성장 뒤에는 스타택스가 있습니다! 병의원 전문 세무경영 컨설팅부터 법인·상속·경정청구 등 10년 이상의 전문가들과 원스톱으로 함께합니다.",
   },
   alternates: {
-    canonical: "https://www.startaxltd.com",
+    canonical: SITE_URL,
   },
 };
 
 const jsonLd = {
   "@context": "https://schema.org",
   "@type": "AccountingService",
-  name: "세무법인 스타택스",
-  url: "https://www.startaxltd.com",
-  logo: "https://www.startaxltd.com/assets/used/logo/startax_logo.png",
-  image: "https://www.startaxltd.com/opengraph-image",
+  name: SITE_NAME,
+  url: SITE_URL,
+  logo: SITE_LOGO_URL,
+  image: `${SITE_URL}/opengraph-image`,
   telephone: "02-423-7110",
   email: "etax119@hanmail.net",
   address: {

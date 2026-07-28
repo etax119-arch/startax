@@ -1,7 +1,9 @@
 'use client';
 
+import Link from 'next/link';
 import styles from './Footer.module.css';
 import { useConsultation } from '../../context/ConsultationContext';
+import { COLUMN_BASE_PATH } from '../../lib/columns/href';
 
 export default function Footer() {
   const { openModal } = useConsultation();
@@ -35,6 +37,9 @@ export default function Footer() {
 
             <div className={styles.right}>
               <div className={styles.links}>
+                <Link href={COLUMN_BASE_PATH} className={styles.link}>
+                  칼럼
+                </Link>
                 <a
                   href="https://www.youtube.com/@startaxaccounting"
                   target="_blank"
@@ -57,6 +62,9 @@ export default function Footer() {
 
           <div className={styles.bottom}>
             <p>© {new Date().getFullYear()} STARTAX Tax Accounting Corporation. All rights reserved.</p>
+            <Link href="/admin" className={styles.adminLink} rel="nofollow">
+              관리자
+            </Link>
           </div>
         </div>
       </div>

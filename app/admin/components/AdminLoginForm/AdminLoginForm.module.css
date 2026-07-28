@@ -1,0 +1,94 @@
+.page {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 20px;
+  background: var(--bg-primary);
+}
+
+.card {
+  width: 100%;
+  max-width: 400px;
+  padding: 44px 36px;
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: 12px;
+  text-align: center;
+}
+
+.header {
+  margin-bottom: 32px;
+}
+
+.logo {
+  font-family: var(--font-serif);
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--accent-gold);
+  letter-spacing: 0.05em;
+}
+
+.title {
+  font-family: var(--font-serif);
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-top: 16px;
+}
+
+.desc {
+  margin-top: 10px;
+  font-size: 14px;
+  line-height: 1.7;
+  color: var(--text-muted);
+  word-break: keep-all;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  text-align: left;
+}
+
+.formGroup {
+  composes: formGroup from '../../styles/form.module.css';
+}
+
+.label {
+  composes: label from '../../styles/form.module.css';
+}
+
+.input {
+  composes: input from '../../styles/form.module.css';
+}
+
+.errorMessage {
+  composes: errorMessage from '../../styles/form.module.css';
+}
+
+.primaryButton {
+  composes: primaryButton from '../../styles/form.module.css';
+  width: 100%;
+  margin-top: 4px;
+}
+
+.backLink {
+  display: inline-block;
+  margin-top: 28px;
+  font-size: 13px;
+  color: var(--text-muted);
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.backLink:hover {
+  color: var(--accent-gold);
+}
+
+@media (max-width: 480px) {
+  .card {
+    padding: 32px 22px;
+  }
+}

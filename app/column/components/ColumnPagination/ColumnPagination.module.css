@@ -1,0 +1,83 @@
+.nav {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  margin-top: 56px;
+}
+
+.pages {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.page {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 36px;
+  height: 36px;
+  padding: 0 8px;
+  border-radius: 6px;
+  font-size: 15px;
+  font-family: var(--font-display);
+  color: var(--text-secondary);
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+.page:hover {
+  color: var(--text-primary);
+  background: var(--bg-elevated);
+}
+
+.pageActive {
+  color: var(--accent-gold);
+  background: var(--bg-elevated);
+  font-weight: 600;
+}
+
+.ellipsis {
+  color: var(--text-muted);
+  padding: 0 4px;
+}
+
+.arrow {
+  padding: 8px 16px;
+  border: 1px solid var(--border-subtle);
+  border-radius: 6px;
+  font-size: 14px;
+  color: var(--text-secondary);
+  text-decoration: none;
+  transition: all 0.3s ease;
+  white-space: nowrap;
+}
+
+.arrow:hover {
+  border-color: var(--border-hover);
+  color: var(--accent-gold);
+}
+
+.disabled {
+  opacity: 0.3;
+  pointer-events: none;
+}
+
+@media (max-width: 768px) {
+  .nav {
+    gap: 8px;
+    margin-top: 40px;
+  }
+
+  .arrow {
+    padding: 8px 12px;
+    font-size: 13px;
+  }
+
+  .page {
+    min-width: 32px;
+    height: 32px;
+    font-size: 14px;
+  }
+}

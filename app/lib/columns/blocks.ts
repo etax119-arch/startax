@@ -1,0 +1,156 @@
+import { COLUMN_LIMITS } from './constants';
+import type { ColumnBlock } from './types';
+import { extractYouTubeId } from '../youtube';
+
+function asString(value: unknown, max: number): string {
+  return typeof value === 'string' ? value.slice(0, max) : '';
+}
+
+function asDimension(value: unknown): number | null {
+  return typeof value === 'number' && Number.isFinite(value) && value > 0
+    ? Math.round(value)
+    : null;
+}
+
+/**
+ * jsonb 는 unknown 으로 돌아오므로 읽기 시에도 검증이 필요합니다.
+ * 읽기용 — 깨진 항목은 조용히 버리고 나머지는 살립니다. 절대 throw 하지 않습니다.
+ */
+export function parseBlocks(raw: unknown): ColumnBlock[] {
+  if (!Array.isArray(raw)) return [];
+
+  const blocks: ColumnBlock[] = [];
+
+  for (const [index, item] of raw.entries()) {
+    if (!item || typeof item !== 'object') continue;
+    const candidate = item as Record<string, unknown>;
+    const id = typeof candidate.id === 'string' && candidate.id ? candidate.id : `block-${index}`;
+
+    switch (candidate.type) {
+      case 'paragraph': {
+        const text = asString(candidate.text, COLUMN_LIMITS.blockText);
+        if (!text.trim()) continue;
+        blocks.push({ id, type: 'paragraph', text });
+        break;
+      }
+      case 'heading': {
+        const text = asString(candidate.text, COLUMN_LIMITS.headingText);
+        if (!text.trim()) continue;
+        blocks.push({ id, type: 'heading', text });
+        break;
+      }
+      case 'image': {
+        const url = asString(candidate.url, COLUMN_LIMITS.url);
+        if (!url) continue;
+        blocks.push({
+          id,
+          type: 'image',
+          url,
+          alt: asString(candidate.alt, COLUMN_LIMITS.alt),
+          caption: asString(candidate.caption, COLUMN_LIMITS.caption),
+          width: asDimension(candidate.width),
+          height: asDimension(candidate.height),
+        });
+        break;
+      }
+      case 'youtube': {
+        const rawUrl = asString(candidate.url, COLUMN_LIMITS.url);
+        const videoId =
+          (typeof candidate.videoId === 'string' && extractYouTubeId(candidate.videoId)) ||
+          extractYouTubeId(rawUrl);
+        if (!videoId) continue;
+        blocks.push({
+          id,
+          type: 'youtube',
+          videoId,
+          url: rawUrl,
+          caption: asString(candidate.caption, COLUMN_LIMITS.caption),
+        });
+        break;
+      }
+      default:
+        continue;
+    }
+  }
+
+  return blocks;
+}
+
+export class BlockValidationError extends Error {}
+
+/**
+ * 쓰기용 — 잘못된 입력은 명확한 한국어 메시지로 throw 합니다.
+ * parseBlocks 와 달리 조용히 버리지 않습니다 (관리자가 저장 실패 이유를 알아야 하므로).
+ */
+export function validateBlocks(raw: unknown): ColumnBlock[] {
+  if (!Array.isArray(raw)) {
+    throw new BlockValidationError('본문 형식이 올바르지 않습니다.');
+  }
+  if (raw.length > COLUMN_LIMITS.blocks) {
+    throw new BlockValidationError(`본문 블록은 최대 ${COLUMN_LIMITS.blocks}개까지 가능합니다.`);
+  }
+
+  const blocks = parseBlocks(raw);
+
+  // parseBlocks 가 걸러낸 게 있으면 비어 있는 블록을 남긴 채 저장하려 한 것입니다.
+  if (blocks.length !== raw.length) {
+    throw new BlockValidationError(
+      '내용이 비어 있거나 형식이 올바르지 않은 블록이 있습니다. 확인 후 다시 저장해주세요.'
+    );
+  }
+  if (blocks.length === 0) {
+    throw new BlockValidationError('본문 블록을 최소 1개 이상 추가해주세요.');
+  }
+
+  return blocks;
+}
+
+/** 검색용 평문. 문단/소제목 텍스트와 이미지·영상 캡션까지 모읍니다. */
+export function blocksToPlainText(blocks: ColumnBlock[]): string {
+  return blocks
+    .map((block) => {
+      switch (block.type) {
+        case 'paragraph':
+        case 'heading':
+          return block.text;
+        case 'image':
+          return [block.alt, block.caption].filter(Boolean).join(' ');
+        case 'youtube':
+          return block.caption;
+      }
+    })
+    .filter(Boolean)
+    .join(' ')
+    .replace(/\s+/g, ' ')
+    .trim();
+}
+
+/** 요약을 비워둔 경우 첫 문단에서 자동 생성합니다. */
+export function buildExcerpt(blocks: ColumnBlock[], max = 160): string {
+  const firstParagraph = blocks.find((block) => block.type === 'paragraph');
+  const source = firstParagraph
+    ? firstParagraph.text
+    : blocksToPlainText(blocks);
+  const normalized = source.replace(/\s+/g, ' ').trim();
+  if (normalized.length <= max) return normalized;
+  return `${normalized.slice(0, max).trimEnd()}…`;
+}
+
+/** 대표 이미지를 지정하지 않은 글의 og:image 폴백. */
+export function firstImageUrl(blocks: ColumnBlock[]): string | null {
+  const imageBlock = blocks.find((block) => block.type === 'image');
+  return imageBlock ? imageBlock.url : null;
+}
+
+/** insert/update 시 search_text 컬럼에 저장할 값. */
+export function buildSearchText(
+  title: string,
+  excerpt: string,
+  blocks: ColumnBlock[]
+): string {
+  return [title, excerpt, blocksToPlainText(blocks)]
+    .filter(Boolean)
+    .join(' ')
+    .replace(/\s+/g, ' ')
+    .trim();
+}
