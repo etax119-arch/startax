@@ -52,11 +52,15 @@ export interface ColumnRow {
   updated_at: string;
 }
 
-/** 목록 화면 전용. blocks 는 절대 select 하지 않습니다. */
+/**
+ * 목록 화면 전용.
+ * coverUrl 은 DB 컬럼이 아니라 서버에서 계산한 값입니다 — 대표 이미지가 없으면
+ * 본문의 첫 이미지·유튜브 썸네일로 채워집니다(resolveCoverUrl).
+ */
 export type ColumnListItem = Pick<
   ColumnRow,
-  'id' | 'slug' | 'title' | 'category' | 'excerpt' | 'thumbnail_url' | 'published_at' | 'created_at'
->;
+  'id' | 'slug' | 'title' | 'category' | 'excerpt' | 'published_at' | 'created_at'
+> & { coverUrl: string | null };
 
 /** 관리자 목록은 미발행 글도 보여주므로 published 상태가 필요합니다. */
 export type AdminColumnListItem = ColumnListItem & Pick<ColumnRow, 'published' | 'updated_at'>;

@@ -37,7 +37,7 @@ export default function LiteYouTube({ videoId, title }: LiteYouTubeProps) {
   return (
     <button
       type="button"
-      className={styles.wrapper}
+      className={`${styles.wrapper} ${styles.trigger}`}
       onClick={() => setIsPlaying(true)}
       aria-label={`${title} 영상 재생`}
     >

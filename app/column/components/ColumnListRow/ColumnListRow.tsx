@@ -8,7 +8,8 @@ import type { ColumnListItem } from '../../../lib/columns/types';
 
 export default function ColumnListRow({ item }: { item: ColumnListItem }) {
   const date = formatColumnDate(item.published_at ?? item.created_at);
-  const hasThumbnail = Boolean(item.thumbnail_url);
+  // 대표 이미지를 등록하지 않았으면 본문의 첫 이미지·유튜브 썸네일이 들어옵니다.
+  const hasThumbnail = Boolean(item.coverUrl);
 
   return (
     <Link
@@ -33,10 +34,10 @@ export default function ColumnListRow({ item }: { item: ColumnListItem }) {
         )}
       </div>
 
-      {item.thumbnail_url && (
+      {item.coverUrl && (
         <div className={styles.thumb}>
           <Image
-            src={item.thumbnail_url}
+            src={item.coverUrl}
             alt=""
             fill
             sizes="(max-width: 768px) 96px, 148px"

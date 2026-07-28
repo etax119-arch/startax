@@ -5,7 +5,7 @@ import { notFound } from 'next/navigation';
 import styles from './page.module.css';
 import BlockRenderer from '../components/BlockRenderer';
 import { SITE_LOGO_URL, SITE_NAME, SITE_URL } from '../../lib/site';
-import { buildExcerpt, firstImageUrl } from '../../lib/columns/blocks';
+import { buildExcerpt, resolveCoverUrl } from '../../lib/columns/blocks';
 import { formatColumnDate } from '../../lib/columns/format';
 import { COLUMN_BASE_PATH, buildColumnHref, buildColumnListHref } from '../../lib/columns/href';
 import { getPublishedColumnBySlug } from '../../lib/columns/queries';
@@ -24,8 +24,9 @@ function resolveDescription(column: ColumnRow): string {
   return column.excerpt || buildExcerpt(column.blocks);
 }
 
+/** 대표 이미지 → 본문 첫 이미지·유튜브 썸네일 → 사이트 기본 OG 이미지 순으로 폴백합니다. */
 function resolveImage(column: ColumnRow): string {
-  return column.thumbnail_url ?? firstImageUrl(column.blocks) ?? `${SITE_URL}/opengraph-image`;
+  return resolveCoverUrl(column.thumbnail_url, column.blocks) ?? `${SITE_URL}/opengraph-image`;
 }
 
 export async function generateMetadata({ params }: ColumnDetailProps): Promise<Metadata> {

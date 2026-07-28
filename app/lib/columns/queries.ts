@@ -2,13 +2,16 @@ import { cache } from 'react';
 import { unstable_cache } from 'next/cache';
 import { getPublicSupabase } from '../supabase/public';
 import { COLUMNS_PAGE_SIZE, type ColumnCategory } from './constants';
-import { parseBlocks } from './blocks';
+import { parseBlocks, resolveCoverUrl } from './blocks';
 import type { ColumnListItem, ColumnRow } from './types';
 
 export const COLUMNS_CACHE_TAG = 'columns';
 
+// blocks 를 함께 가져오는 이유: 대표 이미지가 없는 글의 썸네일을 본문에서 찾아야
+// 합니다. 페이지당 10건으로 제한돼 있고 파생한 URL 만 HTML 로 나가므로,
+// 이 비용은 서버 ↔ DB 구간에만 발생하고 60초 캐시로 다시 줄어듭니다.
 const LIST_FIELDS =
-  'id,slug,title,category,excerpt,thumbnail_url,published_at,created_at';
+  'id,slug,title,category,excerpt,thumbnail_url,blocks,published_at,created_at';
 
 export interface ListColumnsParams {
   /** 1-based */
@@ -56,10 +59,27 @@ async function fetchColumnList(params: ListColumnsParams): Promise<ListColumnsRe
 
   const total = count ?? 0;
   return {
-    items: (data ?? []) as ColumnListItem[],
+    items: (data ?? []).map(toListItem),
     total,
     page,
     pageCount: Math.max(1, Math.ceil(total / COLUMNS_PAGE_SIZE)),
+  };
+}
+
+/** DB 행을 목록 아이템으로 변환합니다. blocks 는 여기서 소비하고 밖으로 내보내지 않습니다. */
+export function toListItem(row: Record<string, unknown>): ColumnListItem {
+  return {
+    id: row.id as string,
+    slug: row.slug as string,
+    title: row.title as string,
+    category: row.category as ColumnListItem['category'],
+    excerpt: row.excerpt as string,
+    published_at: row.published_at as string | null,
+    created_at: row.created_at as string,
+    coverUrl: resolveCoverUrl(
+      (row.thumbnail_url as string | null) ?? null,
+      parseBlocks(row.blocks)
+    ),
   };
 }
 

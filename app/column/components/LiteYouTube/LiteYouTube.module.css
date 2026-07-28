@@ -8,19 +8,18 @@
   border: 1px solid var(--border-subtle);
   background: var(--bg-card);
   padding: 0;
+}
+
+/*
+  썸네일(재생 전) 상태에만 적용합니다.
+  재생 후 iframe 위에 오버레이가 남으면 클릭이 유튜브 플레이어에 닿지 않아
+  일시정지가 되지 않습니다.
+*/
+.trigger {
   cursor: pointer;
 }
 
-.thumbnail {
-  object-fit: cover;
-  transition: transform 0.4s ease;
-}
-
-.wrapper:hover .thumbnail {
-  transform: scale(1.03);
-}
-
-.wrapper::before {
+.trigger::before {
   content: '';
   position: absolute;
   inset: 0;
@@ -29,8 +28,17 @@
   transition: background 0.3s ease;
 }
 
-.wrapper:hover::before {
+.trigger:hover::before {
   background: rgba(0, 0, 0, 0.15);
+}
+
+.thumbnail {
+  object-fit: cover;
+  transition: transform 0.4s ease;
+}
+
+.trigger:hover .thumbnail {
+  transform: scale(1.03);
 }
 
 .playIcon {
@@ -43,7 +51,7 @@
   pointer-events: none;
 }
 
-.wrapper:hover .playIcon {
+.trigger:hover .playIcon {
   transform: translate(-50%, -50%) scale(1.08);
 }
 

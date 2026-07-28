@@ -1,6 +1,6 @@
 import { COLUMN_LIMITS } from './constants';
 import type { ColumnBlock } from './types';
-import { extractYouTubeId } from '../youtube';
+import { extractYouTubeId, youtubeThumbnailUrl } from '../youtube';
 
 function asString(value: unknown, max: number): string {
   return typeof value === 'string' ? value.slice(0, max) : '';
@@ -136,10 +136,30 @@ export function buildExcerpt(blocks: ColumnBlock[], max = 160): string {
   return `${normalized.slice(0, max).trimEnd()}…`;
 }
 
-/** 대표 이미지를 지정하지 않은 글의 og:image 폴백. */
-export function firstImageUrl(blocks: ColumnBlock[]): string | null {
-  const imageBlock = blocks.find((block) => block.type === 'image');
-  return imageBlock ? imageBlock.url : null;
+/**
+ * 대표 이미지를 지정하지 않았을 때 대신 쓸 이미지.
+ * 본문을 위에서부터 훑어 처음 만나는 이미지 또는 유튜브 썸네일을 돌려줍니다.
+ *
+ * 유튜브는 maxresdefault 가 옛 영상에서 404 가 날 수 있는데, 목록 썸네일과
+ * og:image 에는 화면상의 onError 폴백을 걸 수 없으므로 항상 존재하는
+ * hqdefault 를 씁니다.
+ */
+export function firstMediaImageUrl(blocks: ColumnBlock[]): string | null {
+  for (const block of blocks) {
+    if (block.type === 'image' && block.url) return block.url;
+    if (block.type === 'youtube' && block.videoId) {
+      return youtubeThumbnailUrl(block.videoId, 'hq');
+    }
+  }
+  return null;
+}
+
+/** 대표 이미지가 없으면 본문에서 유추합니다. 목록 썸네일과 og:image 가 같은 값을 씁니다. */
+export function resolveCoverUrl(
+  thumbnailUrl: string | null,
+  blocks: ColumnBlock[]
+): string | null {
+  return thumbnailUrl || firstMediaImageUrl(blocks);
 }
 
 /** insert/update 시 search_text 컬럼에 저장할 값. */

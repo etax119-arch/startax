@@ -2,7 +2,8 @@
   display: grid;
   grid-template-columns: 1fr 148px;
   gap: 28px;
-  align-items: flex-start;
+  /* 본문이 행 높이를 정하므로 위쪽에 붙이고, 썸네일만 세로 중앙에 둡니다. */
+  align-items: start;
   padding: 28px 0;
   border-bottom: 1px solid var(--border-subtle);
   text-decoration: none;
@@ -76,6 +77,7 @@
 
 .thumb {
   position: relative;
+  align-self: center;
   width: 148px;
   aspect-ratio: 4 / 3;
   border-radius: 8px;
