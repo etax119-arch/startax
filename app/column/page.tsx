@@ -112,8 +112,9 @@ export default async function ColumnPage({ searchParams }: ColumnPageProps) {
         <ColumnPagination
           page={page}
           pageCount={pageCount}
-          category={category}
-          search={search}
+          buildHref={(target) =>
+            buildColumnListHref({ category, q: search, page: target })
+          }
         />
       </div>
     </div>

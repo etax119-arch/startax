@@ -22,6 +22,9 @@ export function isColumnCategory(value: unknown): value is ColumnCategory {
 
 export const COLUMNS_PAGE_SIZE = 10;
 
+/** 관리자 목록은 관리 작업이라 한 화면에 더 많이 보여줍니다. */
+export const ADMIN_COLUMNS_PAGE_SIZE = 20;
+
 export const COLUMN_LIMITS = {
   title: 120,
   slug: 120,

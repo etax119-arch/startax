@@ -45,6 +45,11 @@ create index if not exists columns_category_idx
 create index if not exists columns_search_idx
   on public.columns using gin (search_text gin_trgm_ops);
 
+-- 관리자 목록은 미발행 글까지 updated_at 내림차순으로 페이지네이션합니다
+-- (app/lib/columns/adminQueries.ts). 이 인덱스가 없으면 매번 전체 정렬이 일어납니다.
+create index if not exists columns_updated_at_idx
+  on public.columns (updated_at desc);
+
 -- ── updated_at 자동 갱신 ────────────────────────────────────────────────────
 create or replace function public.set_updated_at()
 returns trigger language plpgsql as $$

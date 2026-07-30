@@ -1,13 +1,14 @@
 import Link from 'next/link';
 import styles from './ColumnPagination.module.css';
-import type { ColumnCategory } from '../../../lib/columns/constants';
-import { buildColumnListHref } from '../../../lib/columns/href';
 
 interface ColumnPaginationProps {
   page: number;
   pageCount: number;
-  category?: ColumnCategory;
-  search?: string;
+  /**
+   * 페이지 번호 → URL. 공개 목록과 관리자 목록이 서로 다른 경로·쿼리를 쓰므로
+   * 링크 생성만 호출자가 넘기고 이 컴포넌트는 표시에만 집중합니다.
+   */
+  buildHref: (page: number) => string;
 }
 
 const WINDOW = 2;
@@ -24,13 +25,12 @@ function buildPageNumbers(page: number, pageCount: number): number[] {
 export default function ColumnPagination({
   page,
   pageCount,
-  category,
-  search,
+  buildHref,
 }: ColumnPaginationProps) {
   if (pageCount <= 1) return null;
 
   const pages = buildPageNumbers(page, pageCount);
-  const href = (target: number) => buildColumnListHref({ category, q: search, page: target });
+  const href = buildHref;
 
   return (
     <nav className={styles.nav} aria-label="페이지 이동">

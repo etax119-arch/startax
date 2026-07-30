@@ -68,8 +68,24 @@ export type ColumnListItem = Pick<
   'id' | 'slug' | 'title' | 'category' | 'excerpt' | 'published_at' | 'created_at'
 > & { coverUrl: string | null };
 
-/** 관리자 목록은 미발행 글도 보여주므로 published 상태가 필요합니다. */
-export type AdminColumnListItem = ColumnListItem & Pick<ColumnRow, 'published' | 'updated_at'>;
+/**
+ * 관리자 목록 전용. 화면에 실제로 그리는 필드만 담습니다.
+ *
+ * ColumnListItem 을 확장하지 않는 이유: 관리자 목록은 썸네일을 보여주지 않으므로
+ * coverUrl 이 필요 없고, coverUrl 을 계산하지 않으면 본문(blocks)을 조회할 이유도
+ * 없어집니다. 글이 많아질 때 목록 조회 비용을 좌우하는 게 바로 그 blocks 입니다.
+ */
+export type AdminColumnListItem = Pick<
+  ColumnRow,
+  | 'id'
+  | 'slug'
+  | 'title'
+  | 'category'
+  | 'published'
+  | 'published_at'
+  | 'created_at'
+  | 'updated_at'
+>;
 
 /** 생성/수정 엔드포인트가 받는 입력 형태. */
 export interface ColumnInput {

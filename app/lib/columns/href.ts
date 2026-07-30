@@ -26,3 +26,10 @@ export function buildColumnListHref({ category, q, page }: ColumnListQuery): str
 export function buildColumnHref(slug: string): string {
   return `${COLUMN_BASE_PATH}/${encodeURIComponent(slug)}`;
 }
+
+/** 관리자 칼럼 목록 경로. 1페이지는 쿼리를 생략합니다. */
+export const ADMIN_COLUMN_BASE_PATH = '/admin/columns';
+
+export function buildAdminColumnListHref(page?: number): string {
+  return page && page > 1 ? `${ADMIN_COLUMN_BASE_PATH}?page=${page}` : ADMIN_COLUMN_BASE_PATH;
+}
