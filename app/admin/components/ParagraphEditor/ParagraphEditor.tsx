@@ -1,20 +1,24 @@
 'use client';
 
 import { useEffect } from 'react';
-import { EditorContent, useEditor, type Editor } from '@tiptap/react';
+import { EditorContent, useEditor, useEditorState, type Editor } from '@tiptap/react';
+import Bold from '@tiptap/extension-bold';
 import Document from '@tiptap/extension-document';
 import HardBreak from '@tiptap/extension-hard-break';
 import Highlight from '@tiptap/extension-highlight';
 import Paragraph from '@tiptap/extension-paragraph';
 import Text from '@tiptap/extension-text';
+import Underline from '@tiptap/extension-underline';
 import { CharacterCount } from '@tiptap/extensions/character-count';
 import { Placeholder } from '@tiptap/extensions/placeholder';
 import { UndoRedo } from '@tiptap/extensions/undo-redo';
 import styles from './ParagraphEditor.module.css';
 import { COLUMN_LIMITS } from '../../../lib/columns/constants';
 import {
+  INLINE_MARKS,
   inlineToPlainText,
   normalizeInlineContent,
+  type InlineMark,
   type InlineNode,
 } from '../../../lib/columns/inline';
 
@@ -66,10 +70,15 @@ function toInlineContent(editor: Editor): InlineNode[] {
     }
     if (node.type !== 'text' || typeof node.text !== 'string') continue;
 
-    const highlighted = node.marks?.some((mark) => mark.type === 'highlight');
+    // INLINE_MARKS 에 있는 것만, 항상 같은 순서로 담습니다 — 저장 형식이 안정적으로
+    // 유지되고 normalizeInlineContent 가 인접 노드를 제대로 병합할 수 있습니다.
+    const marks = INLINE_MARKS.filter((name) =>
+      node.marks?.some((mark) => mark.type === name)
+    ) as InlineMark[];
+
     content.push(
-      highlighted
-        ? { type: 'text', text: node.text, marks: ['highlight'] }
+      marks.length > 0
+        ? { type: 'text', text: node.text, marks }
         : { type: 'text', text: node.text }
     );
   }
@@ -90,8 +99,8 @@ function toProseMirrorDoc(content: InlineNode[]) {
             : {
                 type: 'text',
                 text: node.text,
-                ...(node.marks?.includes('highlight')
-                  ? { marks: [{ type: 'highlight' }] }
+                ...(node.marks && node.marks.length > 0
+                  ? { marks: node.marks.map((name) => ({ type: name })) }
                   : {}),
               }
         ),
@@ -99,6 +108,45 @@ function toProseMirrorDoc(content: InlineNode[]) {
     ],
   };
 }
+
+/**
+ * 툴바 버튼. 단축키는 각 익스텐션에 이미 들어 있어 여기서는 안내만 합니다
+ * (Highlight: Mod-Shift-h, Bold: Mod-b, Underline: Mod-u).
+ * previewClass 는 버튼 라벨 자체를 그 서식으로 보여주기 위한 것입니다.
+ */
+const MARK_BUTTONS: {
+  mark: InlineMark;
+  label: string;
+  title: string;
+  shortcutLabel: string;
+  ariaKeyshortcuts: string;
+  previewClass: 'labelHighlight' | 'labelBold' | 'labelUnderline';
+}[] = [
+  {
+    mark: 'highlight',
+    label: '하이라이트',
+    title: '선택한 글자에 금빛 강조, 또는 켠 뒤 이어서 입력',
+    shortcutLabel: '⌘/Ctrl+Shift+H',
+    ariaKeyshortcuts: 'Meta+Shift+H Control+Shift+H',
+    previewClass: 'labelHighlight',
+  },
+  {
+    mark: 'bold',
+    label: '굵게',
+    title: '선택한 글자를 굵게, 또는 켠 뒤 이어서 입력',
+    shortcutLabel: '⌘/Ctrl+B',
+    ariaKeyshortcuts: 'Meta+B Control+B',
+    previewClass: 'labelBold',
+  },
+  {
+    mark: 'underline',
+    label: '밑줄',
+    title: '선택한 글자에 밑줄, 또는 켠 뒤 이어서 입력',
+    shortcutLabel: '⌘/Ctrl+U',
+    ariaKeyshortcuts: 'Meta+U Control+U',
+    previewClass: 'labelUnderline',
+  },
+];
 
 interface ParagraphEditorProps {
   content: InlineNode[];
@@ -113,6 +161,8 @@ export default function ParagraphEditor({ content, onChange }: ParagraphEditorPr
       Text,
       EnterAsHardBreak,
       Highlight,
+      Bold,
+      Underline,
       UndoRedo,
       Placeholder.configure({
         placeholder: '본문 내용을 입력하세요. 줄바꿈은 그대로 유지됩니다.',
@@ -135,24 +185,49 @@ export default function ParagraphEditor({ content, onChange }: ParagraphEditorPr
     editor.commands.setContent(toProseMirrorDoc(content), { emitUpdate: false });
   }, [editor, content]);
 
-  const characters = editor?.storage.characterCount.characters() ?? 0;
-  const isHighlightActive = editor?.isActive('highlight') ?? false;
+  /**
+   * useEditor 는 기본적으로 트랜잭션마다 리렌더하지 않습니다(shouldRerenderOnTransaction: false).
+   * 커서만 둔 채 하이라이트를 켜면 문서는 그대로고 storedMarks 만 바뀌는 트랜잭션이라
+   * onUpdate 도 불리지 않아, 글을 입력해 문서가 바뀔 때까지 버튼이 갱신되지 않았습니다.
+   * useEditorState 로 툴바가 쓰는 값만 구독하면 켠 즉시·끈 즉시 반영되고,
+   * 리렌더는 그 값이 실제로 달라질 때만 일어납니다(기본 비교는 deep equal).
+   */
+  const toolbar = useEditorState({
+    editor,
+    selector: ({ editor }) => ({
+      active: MARK_BUTTONS.map(({ mark }) => editor?.isActive(mark) ?? false),
+      characters: editor?.storage.characterCount.characters() ?? 0,
+    }),
+  });
+  const characters = toolbar?.characters ?? 0;
 
   return (
     <div className={styles.field}>
       <div className={styles.toolbar}>
-        <button
-          type="button"
-          className={`${styles.markButton} ${isHighlightActive ? styles.markButtonActive : ''}`}
-          onClick={() => editor?.chain().focus().toggleHighlight().run()}
-          disabled={!editor}
-          aria-pressed={isHighlightActive}
-          title="선택한 글자에 금빛 강조, 또는 켠 뒤 이어서 입력 (⌘/Ctrl+Shift+H)"
-          aria-keyshortcuts="Meta+Shift+H Control+Shift+H"
-        >
-          <span aria-hidden="true" className={styles.markSwatch} />
-          하이라이트
-        </button>
+        <div className={styles.markButtons}>
+          {MARK_BUTTONS.map((button, index) => {
+            const isActive = toolbar?.active[index] ?? false;
+            return (
+              <button
+                key={button.mark}
+                type="button"
+                className={`${styles.markButton} ${isActive ? styles.markButtonActive : ''}`}
+                // 버튼을 눌러도 편집기가 포커스를 잃지 않게 합니다 — 켜자마자 바로 이어서 입력됩니다.
+                onMouseDown={(event) => event.preventDefault()}
+                onClick={() => editor?.chain().focus().toggleMark(button.mark).run()}
+                disabled={!editor}
+                aria-pressed={isActive}
+                title={`${button.title} (${button.shortcutLabel})`}
+                aria-keyshortcuts={button.ariaKeyshortcuts}
+              >
+                {button.mark === 'highlight' && (
+                  <span aria-hidden="true" className={styles.markSwatch} />
+                )}
+                <span className={styles[button.previewClass]}>{button.label}</span>
+              </button>
+            );
+          })}
+        </div>
         <span className={styles.counter}>
           {characters.toLocaleString('ko-KR')} / {COLUMN_LIMITS.blockText.toLocaleString('ko-KR')}자
         </span>

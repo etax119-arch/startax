@@ -33,6 +33,23 @@
   box-decoration-break: clone;
 }
 
+/*
+  굵게·밑줄. 본문이 --text-secondary 라서 강조된 글자는 조금 더 밝게 올려야 읽힙니다.
+  값은 편집기(ParagraphEditor.module.css)와 맞춰져 있습니다 — 함께 고치세요.
+*/
+.paragraph strong {
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.paragraph u {
+  text-decoration: underline;
+  /* 한글은 받침이 밑줄에 닿으므로 살짝 띄웁니다. */
+  text-underline-offset: 0.22em;
+  text-decoration-thickness: 1px;
+  text-decoration-color: var(--accent-gold);
+}
+
 .heading {
   font-family: var(--font-serif);
   font-size: 26px;

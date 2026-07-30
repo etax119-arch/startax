@@ -4,11 +4,34 @@
   gap: 8px;
 }
 
+/*
+  긴 문단을 쓰는 동안에도 서식 버튼이 손에 닿아야 하므로 화면 상단에 붙습니다.
+  관리자 헤더는 고정이 아니라 함께 스크롤되므로 top: 0 이 맞습니다.
+  sticky 가 동작하려면 조상에 스크롤 컨테이너(overflow: hidden 등)가 없어야 합니다 —
+  BlockEditorItem 의 .item 에서 overflow 를 걷어낸 이유입니다.
+
+  음수 마진으로 .body 의 좌우 패딩(16px)을 상쇄해 블록 폭을 꽉 채웁니다.
+  스크롤되는 본문이 뒤로 지나가므로 배경은 반드시 불투명해야 합니다.
+*/
 .toolbar {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  margin: -16px -16px 0;
+  padding: 10px 16px;
+  background: var(--bg-card);
+  border-bottom: 1px solid var(--border-subtle);
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 8px;
+  flex-wrap: wrap;
+}
+
+.markButtons {
+  display: flex;
+  align-items: center;
+  gap: 6px;
   flex-wrap: wrap;
 }
 
@@ -42,6 +65,20 @@
   border-radius: 2px;
   background: rgba(224, 194, 144, 0.4);
   border: 1px solid var(--border-hover);
+}
+
+/* 버튼 라벨을 그 서식 그대로 보여줍니다 — 무슨 버튼인지 글자만 봐도 알 수 있습니다. */
+.labelHighlight {
+  font-weight: inherit;
+}
+
+.labelBold {
+  font-weight: 700;
+}
+
+.labelUnderline {
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
 }
 
 .counter {
@@ -90,8 +127,9 @@
 }
 
 /*
-  편집 중에도 공개 화면과 같은 금빛으로 보여야 하므로
-  BlockRenderer.module.css 의 .highlight 와 값을 맞춥니다 — 함께 고치세요.
+  편집 중에도 공개 화면과 같은 모습이어야 하므로
+  BlockRenderer.module.css 의 .highlight / .paragraph strong / .paragraph u 와
+  값을 맞춥니다 — 함께 고치세요.
 */
 .surface mark {
   background-color: rgba(224, 194, 144, 0.4);
@@ -101,4 +139,16 @@
   border-radius: 3px;
   -webkit-box-decoration-break: clone;
   box-decoration-break: clone;
+}
+
+.surface strong {
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.surface u {
+  text-decoration: underline;
+  text-underline-offset: 0.22em;
+  text-decoration-thickness: 1px;
+  text-decoration-color: var(--accent-gold);
 }

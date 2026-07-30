@@ -11,11 +11,13 @@
   "dependencies": {
     "@supabase/supabase-js": "^2.109.0",
     "@tiptap/core": "^3.29.2",
+    "@tiptap/extension-bold": "^3.29.2",
     "@tiptap/extension-document": "^3.29.2",
     "@tiptap/extension-hard-break": "^3.29.2",
     "@tiptap/extension-highlight": "^3.29.2",
     "@tiptap/extension-paragraph": "^3.29.2",
     "@tiptap/extension-text": "^3.29.2",
+    "@tiptap/extension-underline": "^3.29.2",
     "@tiptap/extensions": "^3.29.2",
     "@tiptap/pm": "^3.29.2",
     "@tiptap/react": "^3.29.2",

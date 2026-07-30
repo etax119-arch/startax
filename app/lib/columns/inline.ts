@@ -7,11 +7,13 @@
  *
  *   [
  *     { type: 'text', text: '병의원 개원 초기에는 ' },
- *     { type: 'text', text: '절세 계획', marks: ['highlight'] },
+ *     { type: 'text', text: '절세 계획', marks: ['highlight', 'bold'] },
  *     { type: 'text', text: '이 중요합니다.' },
  *     { type: 'hardBreak' },
  *     { type: 'text', text: '다음 줄입니다.' },
  *   ]
+ *
+ * 한 노드에 여러 마크가 겹칠 수 있고, 렌더러가 정해진 순서로 중첩해 감쌉니다.
  *
  * 이 표현은 TipTap/ProseMirror 의 인라인 JSON 과 거의 같지만, 저장 형식은 우리가
  * 통제합니다 — marks 를 문자열 배열로 좁혀두어 알 수 없는 마크나 속성이 DB 에
@@ -23,8 +25,12 @@
  * 그대로 남아 있어도 정상 동작합니다.
  */
 
-/** 지금은 하이라이트 하나뿐입니다. 굵게·링크를 추가할 때 여기에 더하면 됩니다. */
-export const INLINE_MARKS = ['highlight'] as const;
+/**
+ * 지원하는 인라인 서식. 이름은 TipTap 익스텐션의 마크 이름과 같아야 합니다
+ * (ParagraphEditor 가 이 목록으로 ProseMirror 마크를 걸러냅니다).
+ * 링크처럼 속성이 필요한 서식을 추가할 때는 marks 를 문자열 배열에서 확장해야 합니다.
+ */
+export const INLINE_MARKS = ['highlight', 'bold', 'underline'] as const;
 export type InlineMark = (typeof INLINE_MARKS)[number];
 
 export interface InlineTextNode {

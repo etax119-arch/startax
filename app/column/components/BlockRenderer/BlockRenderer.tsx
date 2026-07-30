@@ -28,15 +28,18 @@ function aspectRatioStyle(width: number | null, height: number | null): CSSPrope
 function renderInlineContent(content: InlineNode[]): ReactNode[] {
   return content.map((node, index) => {
     if (node.type === 'hardBreak') return <br key={index} />;
+
+    // 마크가 겹칠 수 있으므로 안쪽부터 순서를 고정해 감쌉니다 — 같은 입력이 항상 같은
+    // DOM 을 만듭니다. 하이라이트를 가장 바깥에 두어 금빛 배경이 굵게·밑줄까지 덮습니다.
+    let element: ReactNode = node.text;
+    if (node.marks?.includes('underline')) element = <u>{element}</u>;
+    if (node.marks?.includes('bold')) element = <strong>{element}</strong>;
     if (node.marks?.includes('highlight')) {
-      return (
-        <mark key={index} className={styles.highlight}>
-          {node.text}
-        </mark>
-      );
+      element = <mark className={styles.highlight}>{element}</mark>;
     }
-    // 문자열에도 key 가 필요합니다 — 배열 자식이므로 Fragment 로 감쌉니다.
-    return <Fragment key={index}>{node.text}</Fragment>;
+
+    // 배열 자식이므로 문자열에도 key 가 필요합니다.
+    return <Fragment key={index}>{element}</Fragment>;
   });
 }
 
