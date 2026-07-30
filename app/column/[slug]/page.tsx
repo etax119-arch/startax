@@ -4,7 +4,7 @@ import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import styles from './page.module.css';
 import BlockRenderer from '../components/BlockRenderer';
-import { SITE_LOGO_URL, SITE_NAME, SITE_URL } from '../../lib/site';
+import { FEED_ALTERNATE_TYPES, SITE_LOGO_URL, SITE_NAME, SITE_URL } from '../../lib/site';
 import { buildExcerpt, resolveCoverUrl } from '../../lib/columns/blocks';
 import { formatColumnDate } from '../../lib/columns/format';
 import { COLUMN_BASE_PATH, buildColumnHref, buildColumnListHref } from '../../lib/columns/href';
@@ -47,7 +47,8 @@ export async function generateMetadata({ params }: ColumnDetailProps): Promise<M
   return {
     title: `${column.title} | ${SITE_NAME}`,
     description,
-    alternates: { canonical: url },
+    // types 를 함께 넣지 않으면 부모 layout 의 RSS 링크가 이 페이지에서 사라집니다.
+    alternates: { canonical: url, types: FEED_ALTERNATE_TYPES },
     openGraph: {
       type: 'article',
       url,

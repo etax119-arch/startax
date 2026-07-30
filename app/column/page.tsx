@@ -5,7 +5,7 @@ import ColumnListRow from './components/ColumnListRow';
 import ColumnFilterBar from './components/ColumnFilterBar';
 import ColumnSearchForm from './components/ColumnSearchForm';
 import ColumnPagination from './components/ColumnPagination';
-import { SITE_NAME, SITE_URL } from '../lib/site';
+import { FEED_ALTERNATE_TYPES, SITE_NAME, SITE_URL } from '../lib/site';
 import { COLUMN_LIMITS, isColumnCategory, type ColumnCategory } from '../lib/columns/constants';
 import { buildColumnListHref } from '../lib/columns/href';
 import { listPublishedColumns } from '../lib/columns/queries';
@@ -50,7 +50,8 @@ export async function generateMetadata({ searchParams }: ColumnPageProps): Promi
   return {
     title,
     description,
-    alternates: { canonical },
+    // types 를 함께 넣지 않으면 부모 layout 의 RSS 링크가 이 페이지에서 사라집니다.
+    alternates: { canonical, types: FEED_ALTERNATE_TYPES },
     ...(noIndex ? { robots: { index: false, follow: true } } : {}),
     openGraph: {
       type: 'website',

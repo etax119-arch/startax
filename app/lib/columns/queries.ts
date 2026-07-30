@@ -121,6 +121,32 @@ async function fetchColumnBySlug(slug: string): Promise<ColumnRow | null> {
  */
 export const getPublishedColumnBySlug = cache(fetchColumnBySlug);
 
+/** RSS 피드용. 최신 발행글만 필요하므로 blocks 는 가져오지 않습니다. */
+export async function listRecentPublishedColumns(
+  limit: number
+): Promise<ColumnListItem[]> {
+  const run = unstable_cache(
+    async () => {
+      const { data, error } = await getPublicSupabase()
+        .from('columns')
+        .select('id,slug,title,category,excerpt,thumbnail_url,published_at,created_at')
+        .eq('published', true)
+        .order('published_at', { ascending: false, nullsFirst: false })
+        .order('created_at', { ascending: false })
+        .limit(limit);
+
+      if (error) {
+        throw new Error(`listRecentPublishedColumns failed: ${error.message}`);
+      }
+      // 피드에는 썸네일을 싣지 않으므로 coverUrl 은 대표 이미지만 반영합니다.
+      return (data ?? []).map((row) => toListItem({ ...row, blocks: [] }));
+    },
+    ['columns-recent', String(limit)],
+    { revalidate: 3600, tags: [COLUMNS_CACHE_TAG] }
+  );
+  return run();
+}
+
 export async function getAllPublishedSlugs(): Promise<
   { slug: string; updated_at: string }[]
 > {

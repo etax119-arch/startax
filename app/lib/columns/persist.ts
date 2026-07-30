@@ -52,6 +52,7 @@ export function revalidateColumns(slugs: string[]) {
   revalidateTag(COLUMNS_CACHE_TAG, 'max');
   revalidatePath(COLUMN_BASE_PATH);
   revalidatePath('/sitemap.xml');
+  revalidatePath('/feed.xml');
   for (const slug of new Set(slugs.filter(Boolean))) {
     revalidatePath(buildColumnHref(slug));
   }

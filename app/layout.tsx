@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { Noto_Serif_KR, DM_Sans } from "next/font/google";
 import "./globals.css";
 import { ConsultationProvider } from "./context/ConsultationContext";
-import { SITE_LOGO_URL, SITE_NAME, SITE_URL } from "./lib/site";
+import { FEED_ALTERNATE_TYPES, SITE_LOGO_URL, SITE_NAME, SITE_URL } from "./lib/site";
 
 const notoSerifKr = Noto_Serif_KR({
   subsets: ["latin"],
@@ -38,6 +38,8 @@ export const metadata: Metadata = {
   },
   alternates: {
     canonical: SITE_URL,
+    // 피드 리더와 검색엔진이 RSS 를 스스로 찾을 수 있게 합니다.
+    types: FEED_ALTERNATE_TYPES,
   },
 };
 
