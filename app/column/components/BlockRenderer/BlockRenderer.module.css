@@ -89,9 +89,10 @@
   margin-inline: auto;
 }
 
+/* 이미지·유튜브 캡션 공용. 본문(17px)보다 한 단계 작게 두어 위계는 유지합니다. */
 .caption {
   margin-top: 12px;
-  font-size: 14px;
+  font-size: 16px;
   line-height: 1.7;
   color: var(--text-muted);
   text-align: center;
@@ -116,6 +117,6 @@
   }
 
   .caption {
-    font-size: 13px;
+    font-size: 15px;
   }
 }
