@@ -1,4 +1,10 @@
 import { COLUMN_LIMITS } from './constants';
+import {
+  InlineValidationError,
+  inlineToPlainText,
+  parseInlineContent,
+  validateInlineContent,
+} from './inline';
 import type { ColumnBlock } from './types';
 import { extractYouTubeId, youtubeThumbnailUrl } from '../youtube';
 
@@ -28,9 +34,13 @@ export function parseBlocks(raw: unknown): ColumnBlock[] {
 
     switch (candidate.type) {
       case 'paragraph': {
-        const text = asString(candidate.text, COLUMN_LIMITS.blockText);
-        if (!text.trim()) continue;
-        blocks.push({ id, type: 'paragraph', text });
+        // 새 형식은 content 배열, 옛 형식은 text 문자열입니다 (parseInlineContent 가 둘 다 받습니다).
+        const content = parseInlineContent(
+          candidate.content ?? candidate.text,
+          COLUMN_LIMITS.blockText
+        );
+        if (!inlineToPlainText(content).trim()) continue;
+        blocks.push({ id, type: 'paragraph', content });
         break;
       }
       case 'heading': {
@@ -90,6 +100,23 @@ export function validateBlocks(raw: unknown): ColumnBlock[] {
     throw new BlockValidationError(`본문 블록은 최대 ${COLUMN_LIMITS.blocks}개까지 가능합니다.`);
   }
 
+  // 문단의 인라인 내용은 먼저 엄격히 검증합니다. parseBlocks 는 글자 수 상한을 조용히
+  // 잘라내므로, 그대로 두면 문단 뒷부분이 사라진 채 저장이 성공해버립니다.
+  for (const item of raw) {
+    if (!item || typeof item !== 'object') continue;
+    const candidate = item as Record<string, unknown>;
+    if (candidate.type !== 'paragraph') continue;
+
+    try {
+      validateInlineContent(candidate.content ?? candidate.text ?? [], COLUMN_LIMITS.blockText);
+    } catch (error) {
+      if (error instanceof InlineValidationError) {
+        throw new BlockValidationError(error.message);
+      }
+      throw error;
+    }
+  }
+
   const blocks = parseBlocks(raw);
 
   // parseBlocks 가 걸러낸 게 있으면 비어 있는 블록을 남긴 채 저장하려 한 것입니다.
@@ -111,6 +138,8 @@ export function blocksToPlainText(blocks: ColumnBlock[]): string {
     .map((block) => {
       switch (block.type) {
         case 'paragraph':
+          // 인라인 서식을 벗겨 평문만 남깁니다.
+          return inlineToPlainText(block.content);
         case 'heading':
           return block.text;
         case 'image':
@@ -129,7 +158,7 @@ export function blocksToPlainText(blocks: ColumnBlock[]): string {
 export function buildExcerpt(blocks: ColumnBlock[], max = 160): string {
   const firstParagraph = blocks.find((block) => block.type === 'paragraph');
   const source = firstParagraph
-    ? firstParagraph.text
+    ? inlineToPlainText(firstParagraph.content)
     : blocksToPlainText(blocks);
   const normalized = source.replace(/\s+/g, ' ').trim();
   if (normalized.length <= max) return normalized;

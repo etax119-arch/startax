@@ -16,6 +16,23 @@
   margin-bottom: 0;
 }
 
+/*
+  문단 안의 `==강조==` 하이라이트.
+  <mark> 의 UA 기본값은 노란 배경 + 검은 글자이고 Tailwind preflight 도 리셋하지
+  않으므로 배경과 글자색을 둘 다 명시적으로 덮어써야 합니다.
+  값은 관리자 미리보기(BlockEditorItem.module.css 의 .previewHighlight)와 같습니다 — 함께 고치세요.
+*/
+.highlight {
+  background-color: rgba(224, 194, 144, 0.40);
+  color: var(--text-primary);
+  font-weight: 500;
+  padding: 0.08em 0.22em;
+  border-radius: 3px;
+  /* 줄이 감길 때 배경·여백·라운드를 각 줄에 따로 적용합니다. */
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+}
+
 .heading {
   font-family: var(--font-serif);
   font-size: 26px;

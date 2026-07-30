@@ -30,7 +30,7 @@ create table if not exists public.columns (
 );
 
 comment on column public.columns.blocks is
-  'ColumnBlock(paragraph | heading | image | youtube)의 순서 있는 배열. app/lib/columns/types.ts 참고';
+  'ColumnBlock(paragraph | heading | image | youtube)의 순서 있는 배열. app/lib/columns/types.ts 참고. paragraph 는 인라인 노드 배열(content)을 쓰며, 옛 글은 평문 text 필드로 남아 있어도 읽을 때 변환됩니다 (app/lib/columns/inline.ts)';
 
 comment on column public.columns.category is
   '위 CHECK 목록은 app/lib/columns/constants.ts 의 COLUMN_CATEGORIES 와 반드시 일치해야 합니다. 코드만 고치면 저장 시 23514 로 실패합니다.';

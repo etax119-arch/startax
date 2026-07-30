@@ -2,6 +2,7 @@
 
 import styles from './BlockEditor.module.css';
 import BlockEditorItem from '../BlockEditorItem';
+import { inlineToPlainText } from '../../../lib/columns/inline';
 import type { ColumnBlock, ColumnBlockType } from '../../../lib/columns/types';
 
 const ADD_BUTTONS: { type: ColumnBlockType; label: string }[] = [
@@ -15,7 +16,7 @@ function createBlock(type: ColumnBlockType): ColumnBlock {
   const id = crypto.randomUUID();
   switch (type) {
     case 'paragraph':
-      return { id, type: 'paragraph', text: '' };
+      return { id, type: 'paragraph', content: [] };
     case 'heading':
       return { id, type: 'heading', text: '' };
     case 'image':
@@ -29,6 +30,7 @@ function createBlock(type: ColumnBlockType): ColumnBlock {
 function hasContent(block: ColumnBlock): boolean {
   switch (block.type) {
     case 'paragraph':
+      return inlineToPlainText(block.content).trim().length > 0;
     case 'heading':
       return block.text.trim().length > 0;
     case 'image':

@@ -1,0 +1,104 @@
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.markButton {
+  composes: secondaryButton from '../../styles/form.module.css';
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 6px 12px;
+  border-radius: 6px;
+  font-size: 13px;
+}
+
+.markButton:hover:not(:disabled) {
+  border-color: var(--accent-gold);
+  color: var(--accent-gold);
+}
+
+/* 눌린 상태 — 이제부터 입력하는 글자가 강조된다는 신호입니다. */
+.markButtonActive,
+.markButtonActive:hover:not(:disabled) {
+  border-color: var(--accent-gold);
+  background: rgba(224, 194, 144, 0.16);
+  color: var(--accent-gold-light);
+}
+
+/* 버튼이 어떤 색을 칠하는지 보여주는 견본. 공개 화면 하이라이트와 같은 배경값입니다. */
+.markSwatch {
+  width: 11px;
+  height: 11px;
+  border-radius: 2px;
+  background: rgba(224, 194, 144, 0.4);
+  border: 1px solid var(--border-hover);
+}
+
+.counter {
+  font-size: 12px;
+  color: var(--text-muted);
+  font-variant-numeric: tabular-nums;
+}
+
+/*
+  편집 표면. .textarea 와 같은 껍데기를 쓰되 높이는 내용에 따라 늘어납니다.
+  실제 입력 영역은 TipTap 이 만드는 .surface(.ProseMirror) 입니다.
+*/
+.editor {
+  composes: textarea from '../../styles/form.module.css';
+  padding: 0;
+  min-height: 160px;
+  display: flex;
+  cursor: text;
+}
+
+.editor:focus-within {
+  outline: none;
+  border-color: var(--accent-gold);
+  background: var(--bg-elevated);
+}
+
+.surface {
+  flex: 1;
+  padding: 14px 16px;
+  outline: none;
+  font-size: 15px;
+  line-height: 1.8;
+  color: var(--text-primary);
+  /* 한국어 줄바꿈은 어절 단위로 끊어야 읽힙니다. */
+  word-break: keep-all;
+  white-space: pre-wrap;
+}
+
+/* Placeholder 익스텐션이 비어 있는 문단에 붙이는 속성입니다. */
+.surface p[data-placeholder]::before {
+  content: attr(data-placeholder);
+  color: var(--text-muted);
+  float: left;
+  height: 0;
+  pointer-events: none;
+}
+
+/*
+  편집 중에도 공개 화면과 같은 금빛으로 보여야 하므로
+  BlockRenderer.module.css 의 .highlight 와 값을 맞춥니다 — 함께 고치세요.
+*/
+.surface mark {
+  background-color: rgba(224, 194, 144, 0.4);
+  color: var(--text-primary);
+  font-weight: 500;
+  padding: 0.08em 0.22em;
+  border-radius: 3px;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+}

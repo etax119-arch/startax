@@ -3,6 +3,7 @@
 import Image from 'next/image';
 import styles from './BlockEditorItem.module.css';
 import ImageUploadField from '../ImageUploadField';
+import ParagraphEditor from '../ParagraphEditor';
 import { COLUMN_LIMITS } from '../../../lib/columns/constants';
 import type { ColumnBlock, YoutubeBlock } from '../../../lib/columns/types';
 import { extractYouTubeId, youtubeThumbnailUrl } from '../../../lib/youtube';
@@ -71,12 +72,9 @@ export default function BlockEditorItem({
 
       <div className={styles.body}>
         {block.type === 'paragraph' && (
-          <textarea
-            value={block.text}
-            onChange={(event) => patch({ text: event.target.value })}
-            placeholder="본문 내용을 입력하세요. 줄바꿈은 그대로 유지됩니다."
-            maxLength={COLUMN_LIMITS.blockText}
-            className={styles.textarea}
+          <ParagraphEditor
+            content={block.content}
+            onChange={(content) => patch({ content })}
           />
         )}
 

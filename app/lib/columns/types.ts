@@ -1,13 +1,19 @@
 import type { ColumnCategory } from './constants';
+import type { InlineNode } from './inline';
 
 /** 블록 공통 필드. id는 클라이언트가 crypto.randomUUID()로 생성 — React key + 순서 이동 식별자. */
 interface BlockBase {
   id: string;
 }
 
+/**
+ * 본문 문단. 하이라이트 같은 인라인 서식을 담기 위해 평문이 아니라 노드 배열입니다.
+ * 옛 글은 DB 에 `text: string` 으로 남아 있고 parseBlocks 가 읽을 때 변환합니다
+ * (app/lib/columns/inline.ts).
+ */
 export interface ParagraphBlock extends BlockBase {
   type: 'paragraph';
-  text: string;
+  content: InlineNode[];
 }
 
 export interface HeadingBlock extends BlockBase {
