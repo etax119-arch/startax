@@ -16,6 +16,9 @@
   /* Accent Colors - 골드 */
   --accent-gold: #D4AF7A;
   --accent-gold-light: #E0C290;
+  /* --accent-gold-light 의 반투명 변형. 본문 하이라이트와 배지·눌린 버튼에 씁니다. */
+  --accent-gold-wash: rgba(224, 194, 144, 0.16);
+  --accent-gold-marker: rgba(224, 194, 144, 0.4);
 
   /* Borders */
   --border-subtle: rgba(255, 255, 255, 0.06);

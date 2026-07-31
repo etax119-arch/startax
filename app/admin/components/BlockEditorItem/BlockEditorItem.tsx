@@ -2,6 +2,7 @@
 
 import Image from 'next/image';
 import styles from './BlockEditorItem.module.css';
+import FileUploadField from '../FileUploadField';
 import ImageUploadField from '../ImageUploadField';
 import ParagraphEditor from '../ParagraphEditor';
 import { COLUMN_LIMITS } from '../../../lib/columns/constants';
@@ -13,6 +14,7 @@ const BLOCK_LABELS: Record<ColumnBlock['type'], string> = {
   heading: '소제목',
   image: '이미지',
   youtube: '유튜브',
+  file: '파일',
 };
 
 interface BlockEditorItemProps {
@@ -134,6 +136,19 @@ export default function BlockEditorItem({
 
         {block.type === 'youtube' && (
           <YoutubeFields block={block} patch={patch} />
+        )}
+
+        {block.type === 'file' && (
+          <FileUploadField
+            value={block.url ? { url: block.url, name: block.name, size: block.size } : null}
+            onChange={(uploaded) =>
+              patch({
+                url: uploaded?.url ?? '',
+                name: uploaded?.name ?? '',
+                size: uploaded?.size ?? null,
+              })
+            }
+          />
         )}
       </div>
     </div>

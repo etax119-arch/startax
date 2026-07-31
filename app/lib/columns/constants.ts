@@ -38,10 +38,20 @@ export const COLUMN_LIMITS = {
   alt: 200,
   url: 500,
   blocks: 200,
+  /** 첨부 파일 표시 이름 */
+  fileName: 200,
 } as const;
 
-/** 이미지 업로드 제한. Vercel 서버리스 요청 바디 상한(4.5MB)보다 낮게 잡습니다. */
+/**
+ * 이미지와 첨부 파일에 공통으로 적용되는 업로드 상한입니다.
+ * Vercel 서버리스 요청 바디 상한(4.5MB)보다 낮게 잡습니다 — 업로드가 서버를 거치므로
+ * 한쪽만 올리면 그 요청이 통째로 거부됩니다. 형식별로 다른 상한이 필요해지면
+ * 이 상수를 나누기 전에 업로드 경로부터 바꿔야 합니다.
+ */
 export const MAX_UPLOAD_BYTES = 4 * 1024 * 1024;
+
+/** 화면 문구용. 서버 에러 메시지와 편집기 안내가 같은 값을 보게 합니다. */
+export const MAX_UPLOAD_MB = MAX_UPLOAD_BYTES / (1024 * 1024);
 
 /** 확장자는 파일명이 아니라 이 화이트리스트에서 파생합니다. SVG는 XSS 위험으로 제외. */
 export const ALLOWED_IMAGE_TYPES: Record<string, string> = {
@@ -52,3 +62,43 @@ export const ALLOWED_IMAGE_TYPES: Record<string, string> = {
 };
 
 export const COLUMN_IMAGE_BUCKET = 'column-images';
+
+/**
+ * 첨부 파일은 이미지와 달리 '확장자' 화이트리스트로 거릅니다.
+ *
+ * .hwp/.xlsx 같은 형식은 브라우저·OS 마다 MIME 이 제각각이고 application/octet-stream
+ * 으로 오는 경우도 흔해서, 이미지처럼 MIME 에서 확장자를 파생하면 정상 파일이 거부됩니다.
+ * 대신 저장할 때 클라이언트가 보낸 Content-Type 을 믿지 않고 우리가 고른 값을 쓰며
+ * (FILE_CONTENT_TYPES), 링크는 항상 다운로드로 내려보냅니다. 그래서 확장자를 위장한
+ * 파일이 올라와도 우리 도메인에서 실행될 수 없습니다.
+ */
+export const ALLOWED_FILE_EXTENSIONS = [
+  'pdf',
+  'hwp',
+  'hwpx',
+  'doc',
+  'docx',
+  'xls',
+  'xlsx',
+  'ppt',
+  'pptx',
+  'csv',
+  'zip',
+] as const;
+
+export type AllowedFileExtension = (typeof ALLOWED_FILE_EXTENSIONS)[number];
+
+export function isAllowedFileExtension(value: string): value is AllowedFileExtension {
+  return (ALLOWED_FILE_EXTENSIONS as readonly string[]).includes(value);
+}
+
+/**
+ * 저장 시 쓸 Content-Type. 목록에 없으면 octet-stream 이라 브라우저가 렌더하지 않습니다.
+ * PDF 만 제 타입을 주는 이유: 브라우저 내장 뷰어는 샌드박스라 우리 오리진에 접근하지
+ * 못하고, 나중에 '미리보기' 링크를 붙일 여지를 남겨둡니다.
+ */
+export const FILE_CONTENT_TYPES: Record<string, string> = {
+  pdf: 'application/pdf',
+};
+
+export const COLUMN_FILE_BUCKET = 'column-files';

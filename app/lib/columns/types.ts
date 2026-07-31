@@ -41,7 +41,23 @@ export interface YoutubeBlock extends BlockBase {
   caption: string;
 }
 
-export type ColumnBlock = ParagraphBlock | HeadingBlock | ImageBlock | YoutubeBlock;
+export interface FileBlock extends BlockBase {
+  /** 첨부 파일. 항상 다운로드로 내려보냅니다 (app/lib/columns/constants.ts 참고). */
+  type: 'file';
+  /** 업로드 시 ?download 가 붙은 Supabase Storage 공개 URL. 그대로 링크에 씁니다. */
+  url: string;
+  /** 원본 파일명. 화면 표시용이며 확장자 배지도 여기서 파생합니다. */
+  name: string;
+  /** 바이트. 알 수 없으면 null (이미지의 width/height 와 같은 규칙). */
+  size: number | null;
+}
+
+export type ColumnBlock =
+  | ParagraphBlock
+  | HeadingBlock
+  | ImageBlock
+  | YoutubeBlock
+  | FileBlock;
 export type ColumnBlockType = ColumnBlock['type'];
 
 export interface ColumnRow {

@@ -1,22 +1,15 @@
-import { Fragment, type CSSProperties, type ReactNode } from 'react';
+import { Fragment, type ReactNode } from 'react';
 import Image from 'next/image';
 import styles from './BlockRenderer.module.css';
 import LiteYouTube from '../LiteYouTube';
+import { fileExtensionLabel, formatFileSize } from '../../../lib/columns/file';
 import type { InlineNode } from '../../../lib/columns/inline';
 import type { ColumnBlock } from '../../../lib/columns/types';
 
+// 비율을 모르는 옛 글에서 next/image 가 자리를 잡을 수 있도록 쓰는 기본값입니다.
+// 실제 표시 크기는 CSS 가 정하고(width: 100%), 이 값은 CLS 방지용 자리표시자입니다.
 const FALLBACK_WIDTH = 1200;
 const FALLBACK_HEIGHT = 800;
-
-/**
- * 가로:세로 비율을 CSS 변수로 넘깁니다.
- * 스타일시트가 `max-width: 세로상한 × 비율` 로 환산해, 세로가 상한에 닿는 순간
- * 가로가 더 커지지 않게 만듭니다. 비율을 모르면(옛 글) 제한하지 않습니다.
- */
-function aspectRatioStyle(width: number | null, height: number | null): CSSProperties | undefined {
-  if (!width || !height) return undefined;
-  return { '--column-image-ratio': String(width / height) } as CSSProperties;
-}
 
 /**
  * 문단의 인라인 노드를 React 노드로 옮깁니다. 작성자가 넣은 줄바꿈은 hardBreak 노드로
@@ -86,7 +79,6 @@ export default function BlockRenderer({ blocks, columnTitle }: BlockRendererProp
                   height={block.height ?? FALLBACK_HEIGHT}
                   sizes="(max-width: 800px) 100vw, 760px"
                   className={styles.image}
-                  style={aspectRatioStyle(block.width, block.height)}
                 />
                 {block.caption && <figcaption className={styles.caption}>{block.caption}</figcaption>}
               </figure>
@@ -99,6 +91,32 @@ export default function BlockRenderer({ blocks, columnTitle }: BlockRendererProp
                 {block.caption && <figcaption className={styles.caption}>{block.caption}</figcaption>}
               </figure>
             );
+
+          case 'file': {
+            const size = formatFileSize(block.size);
+            return (
+              <a
+                key={block.id}
+                href={block.url}
+                className={styles.file}
+                // 저장소가 Content-Disposition 을 붙여주지만, 브라우저에도 의도를 알립니다.
+                download={block.name}
+                rel="noopener noreferrer nofollow"
+                aria-label={`${block.name} 내려받기`}
+              >
+                <span className={styles.fileBadge} aria-hidden="true">
+                  {fileExtensionLabel(block.name)}
+                </span>
+                <span className={styles.fileBody}>
+                  <span className={styles.fileName}>{block.name}</span>
+                  {size && <span className={styles.fileSize}>{size}</span>}
+                </span>
+                <span className={styles.fileAction} aria-hidden="true">
+                  내려받기
+                </span>
+              </a>
+            );
+          }
         }
       })}
     </div>

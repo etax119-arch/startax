@@ -78,6 +78,13 @@ export function parseBlocks(raw: unknown): ColumnBlock[] {
         });
         break;
       }
+      case 'file': {
+        const url = asString(candidate.url, COLUMN_LIMITS.url);
+        const name = asString(candidate.name, COLUMN_LIMITS.fileName);
+        if (!url || !name) continue;
+        blocks.push({ id, type: 'file', url, name, size: asDimension(candidate.size) });
+        break;
+      }
       default:
         continue;
     }
@@ -146,6 +153,9 @@ export function blocksToPlainText(blocks: ColumnBlock[]): string {
           return [block.alt, block.caption].filter(Boolean).join(' ');
         case 'youtube':
           return block.caption;
+        case 'file':
+          // 첨부 파일명으로도 글을 찾을 수 있게 합니다.
+          return block.name;
       }
     })
     .filter(Boolean)

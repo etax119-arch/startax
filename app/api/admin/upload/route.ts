@@ -1,11 +1,7 @@
 import { NextResponse } from 'next/server';
 import { requireAdmin } from '../../../lib/admin/auth';
-import { getAdminSupabase } from '../../../lib/supabase/admin';
-import {
-  ALLOWED_IMAGE_TYPES,
-  COLUMN_IMAGE_BUCKET,
-  MAX_UPLOAD_BYTES,
-} from '../../../lib/columns/constants';
+import { ALLOWED_IMAGE_TYPES, COLUMN_IMAGE_BUCKET } from '../../../lib/columns/constants';
+import { uploadColumnAsset, uploadSizeError } from '../../../lib/columns/upload';
 
 export async function POST(request: Request) {
   const denied = await requireAdmin();
@@ -32,35 +28,23 @@ export async function POST(request: Request) {
       );
     }
 
-    if (file.size > MAX_UPLOAD_BYTES) {
-      const limitMb = Math.round(MAX_UPLOAD_BYTES / (1024 * 1024));
-      return NextResponse.json(
-        { error: `이미지는 ${limitMb}MB 이하만 업로드할 수 있습니다.` },
-        { status: 400 }
-      );
+    const tooLarge = uploadSizeError(file, '이미지는');
+    if (tooLarge) {
+      return NextResponse.json({ error: tooLarge }, { status: 400 });
     }
 
-    const now = new Date();
-    const year = now.getUTCFullYear();
-    const month = String(now.getUTCMonth() + 1).padStart(2, '0');
-    const path = `columns/${year}/${month}/${crypto.randomUUID()}.${extension}`;
+    const uploaded = await uploadColumnAsset({
+      bucket: COLUMN_IMAGE_BUCKET,
+      file,
+      extension,
+      // 이미 화이트리스트로 검증한 MIME 이라 그대로 씁니다 — 브라우저가 <img> 로 렌더해야 합니다.
+      contentType: file.type,
+    });
 
-    const supabase = getAdminSupabase();
-    const { error } = await supabase.storage
-      .from(COLUMN_IMAGE_BUCKET)
-      .upload(path, await file.arrayBuffer(), {
-        contentType: file.type,
-        cacheControl: '31536000',
-        upsert: false,
-      });
-
-    if (error) {
-      console.error('Supabase storage upload error:', error);
+    if (!uploaded) {
       return NextResponse.json({ error: '이미지 업로드에 실패했습니다.' }, { status: 500 });
     }
-
-    const { data } = supabase.storage.from(COLUMN_IMAGE_BUCKET).getPublicUrl(path);
-    return NextResponse.json({ url: data.publicUrl, path });
+    return NextResponse.json(uploaded);
   } catch (err) {
     console.error('Admin upload error:', err);
     return NextResponse.json({ error: '서버 오류가 발생했습니다.' }, { status: 500 });

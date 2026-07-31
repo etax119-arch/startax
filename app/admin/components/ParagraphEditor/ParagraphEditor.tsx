@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import { EditorContent, useEditor, useEditorState, type Editor } from '@tiptap/react';
 import Bold from '@tiptap/extension-bold';
 import Document from '@tiptap/extension-document';
@@ -9,6 +9,12 @@ import Highlight from '@tiptap/extension-highlight';
 import Paragraph from '@tiptap/extension-paragraph';
 import Text from '@tiptap/extension-text';
 import Underline from '@tiptap/extension-underline';
+import {
+  Fragment,
+  Slice,
+  type Node as ProseMirrorNode,
+  type Schema,
+} from '@tiptap/pm/model';
 import { CharacterCount } from '@tiptap/extensions/character-count';
 import { Placeholder } from '@tiptap/extensions/placeholder';
 import { UndoRedo } from '@tiptap/extensions/undo-redo';
@@ -16,7 +22,6 @@ import styles from './ParagraphEditor.module.css';
 import { COLUMN_LIMITS } from '../../../lib/columns/constants';
 import {
   INLINE_MARKS,
-  inlineToPlainText,
   normalizeInlineContent,
   type InlineMark,
   type InlineNode,
@@ -39,6 +44,9 @@ const SingleParagraphDocument = Document.extend({ content: 'paragraph' });
  * 기존 편집기의 "줄바꿈은 그대로 유지됩니다" 동작을 이어받습니다.
  */
 const EnterAsHardBreak = HardBreak.extend({
+  // TipTap 기본 Keymap 의 Enter(splitBlock 등)보다 먼저 잡습니다. 우리 스키마에서는
+  // 그 명령들이 모두 실패해 결국 여기로 넘어오지만, 순서를 명시해 두는 편이 안전합니다.
+  priority: 1000,
   addKeyboardShortcuts() {
     return {
       ...this.parent?.(),
@@ -84,6 +92,47 @@ function toInlineContent(editor: Editor): InlineNode[] {
   }
 
   return normalizeInlineContent(content);
+}
+
+/**
+ * 붙여넣은 내용을 인라인으로 눕힙니다.
+ *
+ * 문단 블록의 doc 은 단락을 딱 하나만 담습니다(content: 'paragraph'). 그런데
+ * ProseMirror 의 기본 붙여넣기는 평문을 줄 단위로 잘라 각각 <p> 로 감싸므로,
+ * 여러 줄을 붙여넣으면 두 번째 줄부터 스키마에 맞지 않아 조용히 버려집니다.
+ * 단락 경계를 hardBreak 으로 바꿔 모든 줄을 살립니다.
+ *
+ * 알려진 한계: 연속된 빈 줄은 하나의 줄바꿈으로 합쳐집니다
+ * (ProseMirror 의 평문 분해가 연속 개행을 이미 하나로 합칩니다).
+ */
+function flattenPastedSlice(slice: Slice, schema: Schema): Slice {
+  const nodes: ProseMirrorNode[] = [];
+  let pendingBreak = false;
+
+  const pushInline = (node: ProseMirrorNode) => {
+    if (pendingBreak) {
+      nodes.push(schema.nodes.hardBreak.create());
+      pendingBreak = false;
+    }
+    nodes.push(node);
+  };
+
+  slice.content.descendants((node) => {
+    if (node.isInline) {
+      pushInline(node);
+      return false;
+    }
+    if (node.isTextblock) {
+      // 첫 단락 앞에는 줄바꿈을 넣지 않습니다.
+      if (nodes.length > 0) pendingBreak = true;
+      node.content.forEach(pushInline);
+      return false;
+    }
+    return true;
+  });
+
+  // 인라인만 남았으므로 커서 위치에 그대로 끼워 넣습니다.
+  return new Slice(Fragment.from(nodes), 0, 0);
 }
 
 /** 저장 형식 → ProseMirror JSON. */
@@ -154,6 +203,9 @@ interface ParagraphEditorProps {
 }
 
 export default function ParagraphEditor({ content, onChange }: ParagraphEditorProps) {
+  /** 마지막으로 우리가 위로 올려보낸 배열. 되돌아온 값을 참조만으로 알아보려고 씁니다. */
+  const lastEmitted = useRef<InlineNode[] | null>(null);
+
   const editor = useEditor({
     extensions: [
       SingleParagraphDocument,
@@ -172,16 +224,30 @@ export default function ParagraphEditor({ content, onChange }: ParagraphEditorPr
     content: toProseMirrorDoc(content),
     // Next 는 클라이언트 컴포넌트도 서버에서 렌더하므로 즉시 렌더하면 hydration 이 어긋납니다.
     immediatelyRender: false,
-    editorProps: { attributes: { class: styles.surface } },
-    onUpdate: ({ editor }) => onChange(toInlineContent(editor)),
+    editorProps: {
+      attributes: { class: styles.surface },
+      transformPasted: (slice, view) => flattenPastedSlice(slice, view.state.schema),
+    },
+    onUpdate: ({ editor }) => {
+      const next = toInlineContent(editor);
+      lastEmitted.current = next;
+      onChange(next);
+    },
   });
 
-  // 블록 순서를 바꾸면 같은 컴포넌트가 다른 문단을 받습니다. 편집기 내용과 어긋나면 맞춰줍니다.
-  // (편집 중 자기 onUpdate 로 되돌아온 값에는 반응하지 않도록 평문을 비교합니다.)
+  // 밖에서 들어온 문단이 편집기 내용과 어긋날 때만 맞춰줍니다.
+  //
+  // 비교에 editor.getText() 를 쓰면 안 됩니다 — ProseMirror 의 텍스트 직렬화는
+  // 블록 노드에만 구분자를 넣고 hardBreak 같은 인라인 leaf 는 아무것도 만들지 않아,
+  // 줄바꿈이 하나라도 있으면 저장 형식의 '\n' 과 영원히 달라집니다. 그러면 매 렌더마다
+  // setContent 가 돌아 방금 누른 Enter 와 커서 위치가 지워집니다.
   useEffect(() => {
     if (!editor) return;
-    const incoming = inlineToPlainText(content);
-    if (incoming === editor.getText()) return;
+    // 타이핑으로 우리가 올려보낸 배열이 그대로 돌아온 경우 — 참조만 보고 끝냅니다.
+    if (content === lastEmitted.current) return;
+    // 참조가 다르더라도 내용이 같으면 편집기를 다시 세우지 않습니다. 같은 직렬화
+    // 함수로 만든 값끼리 비교해야 위 함정에 다시 빠지지 않습니다.
+    if (JSON.stringify(toInlineContent(editor)) === JSON.stringify(content)) return;
     editor.commands.setContent(toProseMirrorDoc(content), { emitUpdate: false });
   }, [editor, content]);
 

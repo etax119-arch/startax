@@ -54,7 +54,7 @@
 .markButtonActive,
 .markButtonActive:hover:not(:disabled) {
   border-color: var(--accent-gold);
-  background: rgba(224, 194, 144, 0.16);
+  background: var(--accent-gold-wash);
   color: var(--accent-gold-light);
 }
 
@@ -63,7 +63,7 @@
   width: 11px;
   height: 11px;
   border-radius: 2px;
-  background: rgba(224, 194, 144, 0.4);
+  background: var(--accent-gold-marker);
   border: 1px solid var(--border-hover);
 }
 
@@ -132,7 +132,7 @@
   값을 맞춥니다 — 함께 고치세요.
 */
 .surface mark {
-  background-color: rgba(224, 194, 144, 0.4);
+  background-color: var(--accent-gold-marker);
   color: var(--text-primary);
   font-weight: 500;
   padding: 0.08em 0.22em;

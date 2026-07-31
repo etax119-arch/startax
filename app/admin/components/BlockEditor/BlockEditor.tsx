@@ -10,6 +10,7 @@ const ADD_BUTTONS: { type: ColumnBlockType; label: string }[] = [
   { type: 'heading', label: '+ 소제목' },
   { type: 'image', label: '+ 이미지' },
   { type: 'youtube', label: '+ 유튜브' },
+  { type: 'file', label: '+ 파일' },
 ];
 
 function createBlock(type: ColumnBlockType): ColumnBlock {
@@ -23,6 +24,8 @@ function createBlock(type: ColumnBlockType): ColumnBlock {
       return { id, type: 'image', url: '', alt: '', caption: '', width: null, height: null };
     case 'youtube':
       return { id, type: 'youtube', videoId: '', url: '', caption: '' };
+    case 'file':
+      return { id, type: 'file', url: '', name: '', size: null };
   }
 }
 
@@ -37,6 +40,8 @@ function hasContent(block: ColumnBlock): boolean {
       return Boolean(block.url);
     case 'youtube':
       return Boolean(block.url.trim());
+    case 'file':
+      return Boolean(block.url);
   }
 }
 

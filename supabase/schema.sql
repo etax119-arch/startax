@@ -86,3 +86,13 @@ on conflict (id) do nothing;
 
 -- 객체 키 규칙: columns/{YYYY}/{MM}/{uuid}.{ext}
 -- 공개 URL:    https://<project-ref>.supabase.co/storage/v1/object/public/column-images/<path>
+
+-- 첨부 파일용 버킷. 이미지와 분리해 두면 허용 형식과 Content-Type 정책이 섞이지 않습니다.
+insert into storage.buckets (id, name, public)
+values ('column-files', 'column-files', true)
+on conflict (id) do nothing;
+
+-- 저장 Content-Type 은 서버가 확장자에서 고르며 대개 application/octet-stream 입니다.
+-- 링크에는 ?download=<파일명> 이 붙어 Content-Disposition: attachment 로 내려갑니다.
+-- 그래서 확장자를 위장한 파일이 올라와도 브라우저에서 실행되지 않습니다.
+-- 허용 확장자는 app/lib/columns/constants.ts 의 ALLOWED_FILE_EXTENSIONS 가 단일 출처입니다.
