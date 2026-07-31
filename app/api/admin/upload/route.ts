@@ -1,6 +1,10 @@
 import { NextResponse } from 'next/server';
 import { requireAdmin } from '../../../lib/admin/auth';
-import { ALLOWED_IMAGE_TYPES, COLUMN_IMAGE_BUCKET } from '../../../lib/columns/constants';
+import {
+  ALLOWED_IMAGE_TYPES,
+  COLUMN_IMAGE_BUCKET,
+  MAX_UPLOAD_BYTES,
+} from '../../../lib/columns/constants';
 import { uploadColumnAsset, uploadSizeError } from '../../../lib/columns/upload';
 
 export async function POST(request: Request) {
@@ -28,7 +32,7 @@ export async function POST(request: Request) {
       );
     }
 
-    const tooLarge = uploadSizeError(file, '이미지는');
+    const tooLarge = uploadSizeError(file.size, '이미지는', MAX_UPLOAD_BYTES);
     if (tooLarge) {
       return NextResponse.json({ error: tooLarge }, { status: 400 });
     }

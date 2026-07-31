@@ -43,15 +43,28 @@ export const COLUMN_LIMITS = {
 } as const;
 
 /**
- * 이미지와 첨부 파일에 공통으로 적용되는 업로드 상한입니다.
- * Vercel 서버리스 요청 바디 상한(4.5MB)보다 낮게 잡습니다 — 업로드가 서버를 거치므로
- * 한쪽만 올리면 그 요청이 통째로 거부됩니다. 형식별로 다른 상한이 필요해지면
- * 이 상수를 나누기 전에 업로드 경로부터 바꿔야 합니다.
+ * 이미지 업로드 상한.
+ *
+ * 이미지는 서버 라우트를 거쳐 올라가므로 Vercel 함수의 요청 바디 상한(4.5MB)에
+ * 묶입니다. 이 값을 올리면 그 요청이 413 으로 통째로 거부되므로, 더 큰 이미지를
+ * 받으려면 첨부 파일처럼 스토리지로 직접 올리는 방식으로 바꿔야 합니다.
  */
 export const MAX_UPLOAD_BYTES = 4 * 1024 * 1024;
 
 /** 화면 문구용. 서버 에러 메시지와 편집기 안내가 같은 값을 보게 합니다. */
 export const MAX_UPLOAD_MB = MAX_UPLOAD_BYTES / (1024 * 1024);
+
+/**
+ * 첨부 파일 상한.
+ *
+ * 첨부는 서명 URL 로 스토리지에 직접 올라가 서버 함수를 거치지 않으므로 4.5MB 제약이
+ * 없습니다. 다만 이 상수는 '안내와 사전 차단'일 뿐 실제 강제력은 버킷의
+ * file_size_limit 에 있습니다 — 서명을 받은 뒤 다른 파일을 올릴 수 있기 때문입니다.
+ * 값을 바꾸면 Supabase 의 column-files 버킷 설정도 함께 바꿔야 합니다.
+ */
+export const MAX_FILE_UPLOAD_BYTES = 20 * 1024 * 1024;
+
+export const MAX_FILE_UPLOAD_MB = MAX_FILE_UPLOAD_BYTES / (1024 * 1024);
 
 /** 확장자는 파일명이 아니라 이 화이트리스트에서 파생합니다. SVG는 XSS 위험으로 제외. */
 export const ALLOWED_IMAGE_TYPES: Record<string, string> = {

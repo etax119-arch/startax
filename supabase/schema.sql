@@ -88,9 +88,15 @@ on conflict (id) do nothing;
 -- 공개 URL:    https://<project-ref>.supabase.co/storage/v1/object/public/column-images/<path>
 
 -- 첨부 파일용 버킷. 이미지와 분리해 두면 허용 형식과 Content-Type 정책이 섞이지 않습니다.
-insert into storage.buckets (id, name, public)
-values ('column-files', 'column-files', true)
-on conflict (id) do nothing;
+--
+-- file_size_limit 이 실제 상한을 강제하는 유일한 지점입니다.
+-- 첨부는 서명 URL 로 브라우저가 스토리지에 직접 올리므로(Vercel 함수의 4.5MB 바디 상한
+-- 회피), 서버 코드는 '서명 시점의 신고 크기' 만 볼 수 있고 실제로 올라가는 바이트를
+-- 막지 못합니다. app/lib/columns/constants.ts 의 MAX_FILE_UPLOAD_BYTES 와 같은 값으로
+-- 맞춰 두세요.
+insert into storage.buckets (id, name, public, file_size_limit)
+values ('column-files', 'column-files', true, 20971520)  -- 20MB
+on conflict (id) do update set file_size_limit = excluded.file_size_limit;
 
 -- 저장 Content-Type 은 서버가 확장자에서 고르며 대개 application/octet-stream 입니다.
 -- 링크에는 ?download=<파일명> 이 붙어 Content-Disposition: attachment 로 내려갑니다.
